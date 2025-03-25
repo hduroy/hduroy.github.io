@@ -1,0 +1,714 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据库 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库系统是现代信息系统的核心组件之一，它用于存储、管理和检索数据。以下是对数据库系统相关知识的详细梳理，分为几个关键部分进行讲解：  1. 数据库系统的基本概念 (1) 数据库（Database）  数据库是一个有组织的数据集合，通常以电子形式存储在计算机系统中。 它的主要特点包括：结构化、持久性和共享性。  (2) 数据库管理系统（DBMS）  DBMS 是一种&#x3D;&#x3D;软件系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库">
+<meta property="og:url" content="https://hduroy.github.io/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="Roy&#39;s Blog">
+<meta property="og:description" content="数据库系统是现代信息系统的核心组件之一，它用于存储、管理和检索数据。以下是对数据库系统相关知识的详细梳理，分为几个关键部分进行讲解：  1. 数据库系统的基本概念 (1) 数据库（Database）  数据库是一个有组织的数据集合，通常以电子形式存储在计算机系统中。 它的主要特点包括：结构化、持久性和共享性。  (2) 数据库管理系统（DBMS）  DBMS 是一种&#x3D;&#x3D;软件系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hduroy.github.io/img/logo.png">
+<meta property="article:published_time" content="2025-03-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-25T12:59:32.942Z">
+<meta property="article:author" content="Roy">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hduroy.github.io/img/logo.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数据库",
+  "url": "https://hduroy.github.io/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/",
+  "image": "https://hduroy.github.io/img/logo.png",
+  "datePublished": "2025-03-24T16:00:00.000Z",
+  "dateModified": "2025-03-25T12:59:32.942Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Roy",
+      "url": "https://hduroy.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hduroy.github.io/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">数据库</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数据库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-25T12:59:32.942Z" title="更新于 2025-03-25 20:59:32">2025-03-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE%E5%A4%8D%E4%B9%A0/">专业课复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>数据库系统是现代信息系统的核心组件之一，它用于存储、管理和检索数据。以下是对数据库系统相关知识的详细梳理，分为几个关键部分进行讲解：</p>
+<hr />
+<h3 id="数据库系统的基本概念">1.
+<strong>数据库系统的基本概念</strong></h3>
+<h4 id="数据库database">(1) 数据库（Database）</h4>
+<ul>
+<li>数据库是一个有组织的数据集合，通常以电子形式存储在计算机系统中。</li>
+<li>它的主要特点包括：<strong>结构化</strong>、<strong>持久性</strong>和<strong>共享性</strong>。</li>
+</ul>
+<h4 id="数据库管理系统dbms">(2) 数据库管理系统（DBMS）</h4>
+<ul>
+<li>DBMS 是一种==软件系统==，用于创建、管理、查询和维护数据库。</li>
+<li>常见的 DBMS 包括：
+<ul>
+<li>关系型数据库管理系统（RDBMS）：如 MySQL、PostgreSQL、Oracle、SQL
+Server。</li>
+<li>非关系型数据库（NoSQL）：如 MongoDB、Redis、Cassandra。</li>
+</ul></li>
+</ul>
+<h4 id="数据库系统dbs的组成">(3) 数据库系统（DBS）的组成</h4>
+<p>数据库系统通常由以下几个部分组成： 1.
+<strong>硬件</strong>：服务器、存储设备等。 2.
+<strong>软件</strong>：DBMS 软件及其相关工具。 3.
+<strong>数据</strong>：实际存储在数据库中的信息，是描述事务的符号记录。（Data)
+4. <strong>用户</strong>： -
+<strong>最终用户</strong>：通过应用程序访问数据库。 -
+<strong>数据库管理员（DBA）</strong>：负责数据库的设计、维护和优化。 -
+<strong>开发人员</strong>：编写与数据库交互的应用程序代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">    class DatabaseSystem &#123;</span><br><span class="line">        +QueryProcessor</span><br><span class="line">        +StorageManager</span><br><span class="line">        +TransactionManager</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class QueryProcessor &#123;</span><br><span class="line">        +DDL Interpreter</span><br><span class="line">        +DML Compiler</span><br><span class="line">        +Query Optimizer</span><br><span class="line">        +ExecutionEngine</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class StorageManager &#123;</span><br><span class="line">        +FileManager</span><br><span class="line">        +BufferManager</span><br><span class="line">        +IndexManager</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class TransactionManager &#123;</span><br><span class="line">        +ConcurrencyControl</span><br><span class="line">        +RecoveryManager</span><br><span class="line">        +LockManager</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    DatabaseSystem --&gt; QueryProcessor</span><br><span class="line">    DatabaseSystem --&gt; StorageManager</span><br><span class="line">    DatabaseSystem --&gt; TransactionManager</span><br><span class="line"></span><br><span class="line">    QueryProcessor --&gt; StorageManager: Reads/Writes Data</span><br><span class="line">    TransactionManager --&gt; StorageManager: Logging</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="数据库模型">2. <strong>数据库模型</strong></h3>
+<h4 id="概念模型conceptual-model"><strong>1. 概念模型（Conceptual
+Model）</strong></h4>
+<h5 id="定义">(1) 定义</h5>
+<ul>
+<li>概念模型是数据库设计的最高层次，用于描述系统的整体数据结构，而不涉及具体的实现细节。</li>
+<li>主要目的是捕捉业务需求，并以一种易于理解的方式表示数据及其关系。</li>
+</ul>
+<h5 id="e-r-模型entity-relationship-model">(2) E-R
+模型（Entity-Relationship Model）</h5>
+<ul>
+<li><strong>E-R 模型</strong>
+是概念模型的一种常用表示方法，广泛应用于数据库设计中。</li>
+<li>核心元素：
+<ul>
+<li><strong>实体（Entity）</strong>：现实世界中的对象或概念，如“学生”、“课程”。</li>
+<li><strong>属性（Attribute）</strong>：描述实体的特性，如学生的姓名、年龄。</li>
+<li><strong>关系（Relationship）</strong>：实体之间的联系，如“学生选修课程”。</li>
+</ul></li>
+<li>表示方式：
+<ul>
+<li>实体用矩形表示。</li>
+<li>属性用椭圆表示。</li>
+<li>关系用菱形表示。</li>
+</ul></li>
+</ul>
+<h5 id="特点">(3) 特点</h5>
+<ul>
+<li>不依赖于具体的数据库管理系统（DBMS）。</li>
+<li>适合与非技术人员（如业务分析师）沟通。</li>
+<li>强调数据的语义和逻辑结构。</li>
+</ul>
+<h5 id="示例">示例：</h5>
+<p>假设我们需要设计一个学校管理系统的概念模型： -
+实体：<code>学生</code>、<code>课程</code>、<code>教师</code> - 属性： -
+<code>学生</code>：学号、姓名、性别 -
+<code>课程</code>：课程编号、课程名称 - 关系： -
+学生与课程之间是“选修”关系。 - 教师与课程之间是“教授”关系。</p>
+<hr />
+<h4 id="逻辑模型logical-model"><strong>2. 逻辑模型（Logical
+Model）</strong></h4>
+<h5 id="定义-1">(1) 定义</h5>
+<ul>
+<li>逻辑模型是对概念模型的具体化，定义了数据的逻辑结构，但仍不涉及具体的存储细节。</li>
+<li>它是概念模型与物理模型之间的桥梁。</li>
+</ul>
+<h5 id="数据模型选择">(2) 数据模型选择</h5>
+<ul>
+<li>在逻辑模型阶段，需要选择具体的数据模型（如关系模型、面向对象模型等）来表示数据。</li>
+<li><strong>关系模型</strong>
+是最常用的逻辑模型，数据以表的形式组织。</li>
+</ul>
+<h5 id="分类">(3)分类</h5>
+<h6 id="层次模型hierarchical-model">(1) 层次模型（Hierarchical
+Model）</h6>
+<ul>
+<li>数据以树形结构组织，父节点与子节点之间存在“一对多”关系。</li>
+<li>缺点：不灵活，难以表示复杂的多对多关系。</li>
+</ul>
+<h6 id="网状模型network-model">(2) 网状模型（Network Model）</h6>
+<ul>
+<li>数据以图结构组织，节点之间可以有多对多关系。</li>
+<li>优点：比层次模型更灵活，但复杂度较高。</li>
+</ul>
+<h6 id="关系模型relational-model">(3) 关系模型（Relational Model）</h6>
+<ul>
+<li>数据以表的形式存储，表由行（记录）和列（字段）组成。</li>
+<li>是目前最流行的数据库模型，支持 SQL（Structured Query
+Language）语言。</li>
+</ul>
+<h6 id="面向对象模型object-oriented-model">(4)
+面向对象模型（Object-Oriented Model）</h6>
+<ul>
+<li>数据以对象的形式存储，适合处理复杂数据类型。</li>
+<li>常用于特定领域（如 CAD 和多媒体应用）。 ##### (4) 转换过程</li>
+<li>将概念模型中的实体和关系转换为表和字段。</li>
+<li>示例：
+<ul>
+<li>实体 <code>学生</code> 转换为表 <code>Student</code>，包含字段
+<code>学号</code>、<code>姓名</code>、<code>性别</code>。</li>
+<li>关系 “学生选修课程” 转换为表 <code>Enrollment</code>，包含字段
+<code>学号</code> 和 <code>课程编号</code>。</li>
+</ul></li>
+</ul>
+<h5 id="特点-1">(5) 特点</h5>
+<ul>
+<li>独立于具体的 DBMS。</li>
+<li>关注数据的逻辑结构和完整性约束（如主键、外键）。</li>
+<li>可以通过规范化减少冗余并提高一致性。</li>
+</ul>
+<h5 id="示例-1">示例：</h5>
+<p>继续之前的学校管理系统： - 表 <code>Student</code>： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> Student (</span><br><span class="line">    学号 <span class="type">INT</span> <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    姓名 <span class="type">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line">    性别 <span class="type">CHAR</span>(<span class="number">1</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure> -
+表 <code>Course</code>： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> Course (</span><br><span class="line">    课程编号 <span class="type">INT</span> <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    课程名称 <span class="type">VARCHAR</span>(<span class="number">100</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure> - 表 <code>Enrollment</code>：
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> Enrollment (</span><br><span class="line">    学号 <span class="type">INT</span>,</span><br><span class="line">    课程编号 <span class="type">INT</span>,</span><br><span class="line">    <span class="keyword">PRIMARY KEY</span> (学号, 课程编号),</span><br><span class="line">    <span class="keyword">FOREIGN KEY</span> (学号) <span class="keyword">REFERENCES</span> Student(学号),</span><br><span class="line">    <span class="keyword">FOREIGN KEY</span> (课程编号) <span class="keyword">REFERENCES</span> Course(课程编号)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<hr />
+<h4 id="物理模型physical-model"><strong>3. 物理模型（Physical
+Model）</strong></h4>
+<h5 id="定义-2">(1) 定义</h5>
+<ul>
+<li>物理模型是数据库设计的最低层次，关注数据的存储方式和访问效率。</li>
+<li>它依赖于具体的 DBMS 和硬件环境。</li>
+</ul>
+<h5 id="设计内容">(2) 设计内容</h5>
+<ul>
+<li><strong>存储结构</strong>：如何将表和索引存储在磁盘上。</li>
+<li><strong>文件组织</strong>：数据文件的存储格式（如堆文件、B+树文件）。</li>
+<li><strong>索引设计</strong>：为哪些字段创建索引，以及选择何种索引类型（如
+B 树、哈希索引）。</li>
+<li><strong>分区策略</strong>：是否对表进行水平分区或垂直分区。</li>
+<li><strong>性能优化</strong>：如何配置缓冲区、日志文件等。</li>
+</ul>
+<h5 id="特点-2">(3) 特点</h5>
+<ul>
+<li>高度依赖于具体的 DBMS 和硬件环境。</li>
+<li>关注点是性能和存储效率。</li>
+<li>需要考虑实际的查询模式和负载情况。</li>
+</ul>
+<h5 id="示例-2">示例：</h5>
+<p>在学校的管理系统中，如果查询“某学生选修的所有课程”非常频繁，可以为表
+<code>Enrollment</code> 的 <code>学号</code> 字段创建索引：
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_student_id <span class="keyword">ON</span> Enrollment(学号);</span><br></pre></td></tr></table></figure></p>
+<p>此外，如果数据量较大，可以考虑对表进行分区： - 按 <code>学号</code>
+进行范围分区。 - 按 <code>课程编号</code> 进行散列分区。</p>
+<hr />
+<h3 id="总结三者的关系"><strong>总结：三者的关系</strong></h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 26%" />
+<col style="width: 35%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>模型层次</th>
+<th>描述</th>
+<th>关注点</th>
+<th>输出结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>概念模型</strong></td>
+<td>描述业务需求和数据语义</td>
+<td>数据的语义和逻辑结构</td>
+<td>E-R 图</td>
+</tr>
+<tr>
+<td><strong>逻辑模型</strong></td>
+<td>定义数据的逻辑结构</td>
+<td>数据的规范化、表结构和完整性约束</td>
+<td>数据库表的设计</td>
+</tr>
+<tr>
+<td><strong>物理模型</strong></td>
+<td>定义数据的存储和访问方式</td>
+<td>性能优化、索引设计、存储结构</td>
+<td>具体的数据库实现和配置</td>
+</tr>
+</tbody>
+</table>
+<p>数据库的<strong>三要素</strong>是数据库系统设计和实现中的核心概念，它们分别是<strong>数据结构</strong>、<strong>数据操作</strong>和<strong>数据完整性约束</strong>。这三个要素共同定义了数据库的核心功能和行为。以下是对每个要素的详细解析：</p>
+<hr />
+<h3 id="一数据结构data-structure"><strong>一、数据结构（Data
+Structure）</strong></h3>
+<h4 id="定义-3"><strong>定义</strong></h4>
+<ul>
+<li>数据结构描述了数据在数据库中的存储方式和组织形式。</li>
+<li>它决定了数据的逻辑和物理表示。</li>
+</ul>
+<h4 id="内容"><strong>内容</strong></h4>
+<ol type="1">
+<li><strong>逻辑数据结构</strong>：
+<ul>
+<li>描述数据之间的关系和组织方式。</li>
+<li>常见的逻辑数据模型包括：
+<ul>
+<li><strong>层次模型（Hierarchical
+Model）</strong>：数据以树形结构组织。</li>
+<li><strong>网状模型（Network
+Model）</strong>：数据以图的形式组织。</li>
+<li><strong>关系模型（Relational
+Model）</strong>：数据以表格形式组织，使用行和列存储数据。</li>
+<li><strong>面向对象模型（Object-Oriented
+Model）</strong>：数据以对象的形式组织。</li>
+</ul></li>
+</ul></li>
+<li><strong>物理数据结构</strong>：
+<ul>
+<li>描述数据在存储介质上的实际存储方式。</li>
+<li>包括文件组织方式（如堆文件、索引文件）、存储格式（如B树、哈希表）等。</li>
+</ul></li>
+</ol>
+<h4 id="作用"><strong>作用</strong></h4>
+<ul>
+<li>数据结构决定了数据的存储效率和访问效率。</li>
+<li>它是数据库设计的基础，直接影响系统的性能和可扩展性。</li>
+</ul>
+<hr />
+<h3 id="二数据操作data-manipulation"><strong>二、数据操作（Data
+Manipulation）</strong></h3>
+<h4 id="定义-4"><strong>定义</strong></h4>
+<ul>
+<li>数据操作是指对数据库中数据的存取、修改和管理的操作集合。</li>
+<li>这些操作通过查询语言（如SQL）或编程接口实现。</li>
+</ul>
+<h4 id="内容-1"><strong>内容</strong></h4>
+<ol type="1">
+<li><strong>基本操作</strong>：
+<ul>
+<li><strong>增（Insert）</strong>：向数据库中添加新数据。</li>
+<li><strong>删（Delete）</strong>：从数据库中删除数据。</li>
+<li><strong>改（Update）</strong>：修改数据库中的现有数据。</li>
+<li><strong>查（Query/Select）</strong>：从数据库中检索数据。</li>
+</ul></li>
+<li><strong>高级操作</strong>：
+<ul>
+<li><strong>事务处理</strong>：确保一组操作要么全部成功，要么全部失败（ACID特性）。</li>
+<li><strong>并发控制</strong>：协调多个用户同时访问数据库的操作。</li>
+<li><strong>优化操作</strong>：通过索引、缓存等技术提高查询效率。</li>
+</ul></li>
+</ol>
+<h4 id="作用-1"><strong>作用</strong></h4>
+<ul>
+<li>数据操作是用户与数据库交互的主要方式。</li>
+<li>它提供了灵活的数据访问能力，满足不同应用场景的需求。</li>
+</ul>
+<hr />
+<h3
+id="三数据完整性约束data-integrity-constraints"><strong>三、数据完整性约束（Data
+Integrity Constraints）</strong></h3>
+<h4 id="定义-5"><strong>定义</strong></h4>
+<ul>
+<li>数据完整性约束是一组规则，用于确保数据库中的数据始终符合预期的语义和逻辑。</li>
+<li>它是数据库一致性和可靠性的保障。</li>
+</ul>
+<h4 id="内容-2"><strong>内容</strong></h4>
+<ol type="1">
+<li><strong>实体完整性（Entity Integrity）</strong>：
+<ul>
+<li>确保每个表的主键值唯一且非空。</li>
+<li>例如：<code>Student</code>表的<code>ID</code>字段不能重复或为空。</li>
+</ul></li>
+<li><strong>参照完整性（Referential Integrity）</strong>：
+<ul>
+<li>确保外键值有效，要么引用另一个表中的主键值，要么为空。</li>
+<li>例如：<code>Enrollment</code>表中的<code>StudentID</code>必须存在于<code>Student</code>表中。</li>
+</ul></li>
+<li><strong>域完整性（Domain Integrity）</strong>：
+<ul>
+<li>确保字段的值符合其定义的数据类型和范围。</li>
+<li>例如：<code>Age</code>字段只能为正整数。</li>
+</ul></li>
+<li><strong>用户定义完整性（User-Defined Integrity）</strong>：
+<ul>
+<li>用户根据业务需求定义的特定规则。</li>
+<li>例如：<code>Salary</code>字段的值必须大于某个最小值。</li>
+</ul></li>
+</ol>
+<h4 id="作用-2"><strong>作用</strong></h4>
+<ul>
+<li>数据完整性约束防止了无效数据的插入或更新。</li>
+<li>它确保了数据库的一致性和可靠性，避免因数据错误导致的业务问题。</li>
+</ul>
+<hr />
+<h3 id="四三要素的关系"><strong>四、三要素的关系</strong></h3>
+<ul>
+<li><strong>数据结构</strong>是基础：它决定了数据如何存储和组织。</li>
+<li><strong>数据操作</strong>是手段：通过操作实现对数据的存取和管理。</li>
+<li><strong>数据完整性约束</strong>是保障：确保数据始终符合业务规则和逻辑。</li>
+</ul>
+<p>这三者相辅相成，共同构成了数据库的核心体系。例如： -
+在设计一个学生管理系统时： -
+<strong>数据结构</strong>：设计<code>Student</code>表和<code>Course</code>表，并建立它们之间的关系。
+- <strong>数据操作</strong>：提供添加学生、查询课程等功能。 -
+<strong>数据完整性约束</strong>：确保学生的学号唯一，课程编号不能为空。</p>
+<hr />
+<h3 id="五总结"><strong>五、总结</strong></h3>
+<p>数据库的三要素是理解数据库系统的关键，以下是简要总结：</p>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 42%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th><strong>要素</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数据结构</strong></td>
+<td>数据的存储和组织方式</td>
+<td>表格、树形结构、索引、文件组织</td>
+</tr>
+<tr>
+<td><strong>数据操作</strong></td>
+<td>对数据的存取、修改和管理</td>
+<td>增删改查、事务处理、并发控制</td>
+</tr>
+<tr>
+<td><strong>数据完整性约束</strong></td>
+<td>确保数据符合预期的语义和逻辑</td>
+<td>主键、外键、字段类型、业务规则</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="关系型数据库的核心概念">3.
+<strong>关系型数据库的核心概念</strong></h3>
+<h4 id="表table">(1) 表（Table）</h4>
+<ul>
+<li>表是关系型数据库的核心结构，用于存储数据。</li>
+<li>每个表包含若干行（记录）和列（字段）。</li>
+</ul>
+<h4 id="主键primary-key">(2) 主键（Primary Key）</h4>
+<ul>
+<li>唯一标识表中每一行的字段或字段组合。</li>
+<li>特点：唯一性和非空性。</li>
+</ul>
+<h4 id="外键foreign-key">(3) 外键（Foreign Key）</h4>
+<ul>
+<li>用于建立表与表之间的关系。</li>
+<li>外键是一个表中的字段，指向另一个表的主键。</li>
+</ul>
+<h4 id="数据完整性约束">(4) 数据完整性约束</h4>
+<ul>
+<li><strong>实体完整性</strong>：主键不能为 NULL。</li>
+<li><strong>参照完整性</strong>：外键必须引用有效的主键值。</li>
+<li><strong>域完整性</strong>：字段的值必须符合定义的数据类型和范围。</li>
+</ul>
+<h4 id="规范化normalization">(5) 规范化（Normalization）</h4>
+<ul>
+<li>数据库设计的一种方法，旨在减少数据冗余并提高数据一致性。</li>
+<li>常见的规范化形式：
+<ul>
+<li>第一范式（1NF）：消除重复组。</li>
+<li>第二范式（2NF）：消除部分依赖。</li>
+<li>第三范式（3NF）：消除传递依赖。 #### (6)三级模式两级映像
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    subgraph ExternalLevel[&quot;外部级（用户视图）&quot;]</span><br><span class="line">        A[外部模式1] --&gt;|外模式-概念模式映像| B</span><br><span class="line">        A2[外部模式2] --&gt;|外模式-概念模式映像| B</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph ConceptualLevel[&quot;概念级（全局逻辑）&quot;]</span><br><span class="line">        B[概念模式] --&gt;|概念模式-内模式映像| C</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph InternalLevel[&quot;内部级（物理存储）&quot;]</span><br><span class="line">        C[内模式]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style A fill:#f9f,stroke:#333</span><br><span class="line">    style A2 fill:#f9f,stroke:#333</span><br><span class="line">    style B fill:#6af,stroke:#333</span><br><span class="line">    style C fill:#4f4,stroke:#333</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="sql-语言">4. <strong>SQL 语言</strong></h3>
+<p>SQL 是关系型数据库的标准查询语言，主要包括以下内容：</p>
+<h4 id="数据定义语言ddl">(1) 数据定义语言（DDL）</h4>
+<ul>
+<li>用于定义和修改数据库结构。</li>
+<li>常用命令：
+<ul>
+<li><code>CREATE</code>：创建表、视图等。</li>
+<li><code>ALTER</code>：修改表结构。</li>
+<li><code>DROP</code>：删除表或数据库。</li>
+</ul></li>
+</ul>
+<h4 id="数据操作语言dml">(2) 数据操作语言（DML）</h4>
+<ul>
+<li>用于操作数据库中的数据。</li>
+<li>常用命令：
+<ul>
+<li><code>SELECT</code>：查询数据。</li>
+<li><code>INSERT</code>：插入数据。</li>
+<li><code>UPDATE</code>：更新数据。</li>
+<li><code>DELETE</code>：删除数据。</li>
+</ul></li>
+</ul>
+<h4 id="数据控制语言dcl">(3) 数据控制语言（DCL）</h4>
+<ul>
+<li>用于控制数据库的访问权限。</li>
+<li>常用命令：
+<ul>
+<li><code>GRANT</code>：授予权限。</li>
+<li><code>REVOKE</code>：撤销权限。</li>
+</ul></li>
+</ul>
+<h4 id="事务控制语言tcl">(4) 事务控制语言（TCL）</h4>
+<ul>
+<li>用于管理事务（Transaction）。</li>
+<li>常用命令：
+<ul>
+<li><code>COMMIT</code>：提交事务。</li>
+<li><code>ROLLBACK</code>：回滚事务。</li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="数据库事务">5. <strong>数据库事务</strong></h3>
+<h4 id="事务的特性acid">(1) 事务的特性（ACID）</h4>
+<ul>
+<li><strong>原子性（Atomicity）</strong>：事务中的所有操作要么全部完成，要么全部失败。</li>
+<li><strong>一致性（Consistency）</strong>：事务执行前后，数据库保持一致状态。</li>
+<li><strong>隔离性（Isolation）</strong>：多个事务并发执行时互不干扰。</li>
+<li><strong>持久性（Durability）</strong>：事务一旦提交，其结果将永久保存。</li>
+</ul>
+<h4 id="并发控制">(2) 并发控制</h4>
+<ul>
+<li>用于解决多个事务同时访问数据库时可能引发的问题（如脏读、不可重复读、幻读）。</li>
+<li>常见技术：
+<ul>
+<li><strong>锁机制</strong>：悲观锁和乐观锁。</li>
+<li><strong>隔离级别</strong>：READ UNCOMMITTED、READ
+COMMITTED、REPEATABLE READ、SERIALIZABLE。</li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="数据库索引">6. <strong>数据库索引</strong></h3>
+<ul>
+<li>索引是加速数据检索的辅助结构。</li>
+<li>常见类型：
+<ul>
+<li><strong>B
+树索引</strong>：适用于范围查询。非数值也可通过一定的标准比较大小，从而转化为数值类型索引</li>
+<li><strong>哈希索引</strong>：适用于等值查询。</li>
+</ul></li>
+<li>注意事项：
+<ul>
+<li>索引会占用额外的存储空间。</li>
+<li>频繁的写操作可能导致索引维护成本增加。</li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="分布式数据库">7. <strong>分布式数据库</strong></h3>
+<h4 id="定义-6">(1) 定义</h4>
+<ul>
+<li>数据分布在多个物理节点上，但仍能作为一个整体提供服务。</li>
+<li>常见架构：
+<ul>
+<li><strong>分片（Sharding）</strong>：将数据水平分割到不同节点。</li>
+<li><strong>复制（Replication）</strong>：在多个节点上存储相同数据以提高可用性。</li>
+</ul></li>
+</ul>
+<h4 id="cap-理论">(2) CAP 理论</h4>
+<ul>
+<li>分布式系统无法同时满足以下三个特性：
+<ul>
+<li><strong>一致性（Consistency）</strong>：所有节点的数据一致。</li>
+<li><strong>可用性（Availability）</strong>：每个请求都能收到响应。</li>
+<li><strong>分区容错性（Partition
+Tolerance）</strong>：系统在部分节点失效时仍能工作。</li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="数据库性能优化">8. <strong>数据库性能优化</strong></h3>
+<h4 id="查询优化">(1) 查询优化</h4>
+<ul>
+<li>使用索引、避免全表扫描。</li>
+<li>优化 SQL 语句，减少不必要的计算。</li>
+</ul>
+<h4 id="数据库设计优化">(2) 数据库设计优化</h4>
+<ul>
+<li>合理设计表结构，避免过度规范化或欠规范化。</li>
+<li>根据业务需求选择合适的数据库类型（如 OLTP 或 OLAP）。</li>
+</ul>
+<h4 id="硬件优化">(3) 硬件优化</h4>
+<ul>
+<li>提高磁盘 I/O 性能。</li>
+<li>增加内存以减少磁盘访问频率。</li>
+</ul>
+<hr />
+<h3 id="常见数据库系统对比">9. <strong>常见数据库系统对比</strong></h3>
+<table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>特性</th>
+<th>MySQL</th>
+<th>PostgreSQL</th>
+<th>MongoDB</th>
+<th>Redis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>RDBMS</td>
+<td>RDBMS</td>
+<td>NoSQL（文档型）</td>
+<td>NoSQL（键值型）</td>
+</tr>
+<tr>
+<td>最佳应用场景</td>
+<td>Web 应用</td>
+<td>复杂查询</td>
+<td>半结构化数据</td>
+<td>缓存、实时数据</td>
+</tr>
+<tr>
+<td>事务支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>部分支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>垂直扩展为主</td>
+<td>垂直扩展为主</td>
+<td>水平扩展</td>
+<td>水平扩展</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/">https://hduroy.github.io/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/25/KMP%E7%AE%97%E6%B3%95/" title="KMP算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">KMP算法</div></div><div class="info-2"><div class="info-item-1">KMP算法（Knuth-Morris-Pratt Algorithm）是一种高效的字符串匹配算法，由Donald Knuth、Vaughan Pratt和James H. Morris于1977年共同提出。它的核心思想是通过预处理模式串（Pattern），构建一个部分匹配表（Partial Match Table，也称为前缀函数或失败函数），从而避免在匹配失败时回溯文本串（Text）的指针，从而提高匹配效率。  1. 问题背景 在字符串匹配问题中，给定一个文本串T和一个模式串P，目标是找到模式串P在文本串T中出现的所有位置。传统的暴力匹配算法的时间复杂度为O(n * m)（其中n是文本串长度，m是模式串长度），而KMP算法通过优化使时间复杂度降低到O(n + m)。  2....</div></div></div></a><a class="pagination-related" href="/2025/03/25/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E5%92%8C%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/" title="流量控制和拥塞控制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">流量控制和拥塞控制</div></div><div class="info-2"><div class="info-item-1">流量控制（Flow Control）和拥塞控制（Congestion Control）是计算机网络中两个重要的机制，虽然它们都与数据传输的速率管理有关，但它们的目标、作用范围和实现方式存在显著区别。以下是两者的详细对比：  1. 流量控制（Flow Control） （1）定义 流量控制是一种用于协调发送方和接收方之间数据传输速率的机制，目的是防止接收方因处理能力不足而导致数据丢失。 （2）目标  确保发送方的发送速率不超过接收方的处理能力。 避免接收方的缓冲区溢出。  （3）作用范围  流量控制发生在点对点通信中，即发送方和接收方之间的直接链路。 它关注的是单个链路上的数据流管理。  （4）实现方式  停等协议（Stop-and-Wait）：  发送方每发送一帧后等待接收方确认，再发送下一帧。  滑动窗口协议（Sliding Window Protocol）：  接收方通过窗口大小告知发送方可以连续发送的帧数量。 常见协议包括：  Go-Back-N ARQ：当某帧出错时，重传该帧及其后续所有帧。 Selective...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1.
+数据库系统的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93database"><span class="toc-number">1.1.</span> <span class="toc-text">(1) 数据库（Database）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9Fdbms"><span class="toc-number">1.2.</span> <span class="toc-text">(2) 数据库管理系统（DBMS）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9Fdbs%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">1.3.</span> <span class="toc-text">(3) 数据库系统（DBS）的组成</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">2. 数据库模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8Bconceptual-model"><span class="toc-number">2.1.</span> <span class="toc-text">1. 概念模型（Conceptual
+Model）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">(1) 定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e-r-%E6%A8%A1%E5%9E%8Bentity-relationship-model"><span class="toc-number">2.1.2.</span> <span class="toc-text">(2) E-R
+模型（Entity-Relationship Model）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">2.1.3.</span> <span class="toc-text">(3) 特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.1.4.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%A8%A1%E5%9E%8Blogical-model"><span class="toc-number">2.2.</span> <span class="toc-text">2. 逻辑模型（Logical
+Model）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">(1) 定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="toc-number">2.2.2.</span> <span class="toc-text">(2) 数据模型选择</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">2.2.3.</span> <span class="toc-text">(3)分类</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E6%A8%A1%E5%9E%8Bhierarchical-model"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">(1) 层次模型（Hierarchical
+Model）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%BD%91%E7%8A%B6%E6%A8%A1%E5%9E%8Bnetwork-model"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">(2) 网状模型（Network Model）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%A8%A1%E5%9E%8Brelational-model"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">(3) 关系模型（Relational Model）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8Bobject-oriented-model"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">(4)
+面向对象模型（Object-Oriented Model）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">(5) 特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">2.2.5.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8Bphysical-model"><span class="toc-number">2.3.</span> <span class="toc-text">3. 物理模型（Physical
+Model）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">(1) 定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%86%85%E5%AE%B9"><span class="toc-number">2.3.2.</span> <span class="toc-text">(2) 设计内容</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-number">2.3.3.</span> <span class="toc-text">(3) 特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-number">2.3.4.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.</span> <span class="toc-text">总结：三者的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84data-structure"><span class="toc-number">4.</span> <span class="toc-text">一、数据结构（Data
+Structure）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="toc-number">4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AE%B9"><span class="toc-number">4.2.</span> <span class="toc-text">内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-number">4.3.</span> <span class="toc-text">作用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9Cdata-manipulation"><span class="toc-number">5.</span> <span class="toc-text">二、数据操作（Data
+Manipulation）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-4"><span class="toc-number">5.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AE%B9-1"><span class="toc-number">5.2.</span> <span class="toc-text">内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8-1"><span class="toc-number">5.3.</span> <span class="toc-text">作用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9Fdata-integrity-constraints"><span class="toc-number">6.</span> <span class="toc-text">三、数据完整性约束（Data
+Integrity Constraints）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-5"><span class="toc-number">6.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AE%B9-2"><span class="toc-number">6.2.</span> <span class="toc-text">内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8-2"><span class="toc-number">6.3.</span> <span class="toc-text">作用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%89%E8%A6%81%E7%B4%A0%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">7.</span> <span class="toc-text">四、三要素的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">五、总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">9.</span> <span class="toc-text">3.
+关系型数据库的核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8table"><span class="toc-number">9.1.</span> <span class="toc-text">(1) 表（Table）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E9%94%AEprimary-key"><span class="toc-number">9.2.</span> <span class="toc-text">(2) 主键（Primary Key）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E9%94%AEforeign-key"><span class="toc-number">9.3.</span> <span class="toc-text">(3) 外键（Foreign Key）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="toc-number">9.4.</span> <span class="toc-text">(4) 数据完整性约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%84%E8%8C%83%E5%8C%96normalization"><span class="toc-number">9.5.</span> <span class="toc-text">(5) 规范化（Normalization）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql-%E8%AF%AD%E8%A8%80"><span class="toc-number">10.</span> <span class="toc-text">4. SQL 语言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E8%AF%AD%E8%A8%80ddl"><span class="toc-number">10.1.</span> <span class="toc-text">(1) 数据定义语言（DDL）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E8%AF%AD%E8%A8%80dml"><span class="toc-number">10.2.</span> <span class="toc-text">(2) 数据操作语言（DML）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80dcl"><span class="toc-number">10.3.</span> <span class="toc-text">(3) 数据控制语言（DCL）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6%E8%AF%AD%E8%A8%80tcl"><span class="toc-number">10.4.</span> <span class="toc-text">(4) 事务控制语言（TCL）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1"><span class="toc-number">11.</span> <span class="toc-text">5. 数据库事务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%89%B9%E6%80%A7acid"><span class="toc-number">11.1.</span> <span class="toc-text">(1) 事务的特性（ACID）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-number">11.2.</span> <span class="toc-text">(2) 并发控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95"><span class="toc-number">12.</span> <span class="toc-text">6. 数据库索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">13.</span> <span class="toc-text">7. 分布式数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-6"><span class="toc-number">13.1.</span> <span class="toc-text">(1) 定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cap-%E7%90%86%E8%AE%BA"><span class="toc-number">13.2.</span> <span class="toc-text">(2) CAP 理论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">14.</span> <span class="toc-text">8. 数据库性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="toc-number">14.1.</span> <span class="toc-text">(1) 查询优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96"><span class="toc-number">14.2.</span> <span class="toc-text">(2) 数据库设计优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E4%BC%98%E5%8C%96"><span class="toc-number">14.3.</span> <span class="toc-text">(3) 硬件优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E5%AF%B9%E6%AF%94"><span class="toc-number">15.</span> <span class="toc-text">9. 常见数据库系统对比</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习">408复试复习</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/KMP%E7%AE%97%E6%B3%95/" title="KMP算法">KMP算法</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E5%92%8C%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/" title="流量控制和拥塞控制">流量控制和拥塞控制</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/%E6%B5%B7%E6%98%8E%E7%A0%81%E5%92%8C%E7%A0%81%E8%B7%9D/" title="海明码和码距">海明码和码距</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
