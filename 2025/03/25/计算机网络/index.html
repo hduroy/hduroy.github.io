@@ -1,11 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络笔记 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="article">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>计算机网络笔记 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、计算级网络的功能 [[#1. 数据通信]] 1. 数据通信  作用 ：将数据从一个节点传输到另一个节点。 例子 ：  电子邮件（Email）发送与接收。 文件传输（如FTP）。 即时通讯（如微信、QQ） #### 2. 资源共享   资源共享是计算机网络的核心目标之一，旨在高效利用有限的资源。  硬件资源共享 ：  共享打印机、存储">
+<meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络笔记">
 <meta property="og:url" content="https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Roy&#39;s Blog">
+<meta property="og:description" content="一、计算级网络的功能 [[#1. 数据通信]] 1. 数据通信  作用 ：将数据从一个节点传输到另一个节点。 例子 ：  电子邮件（Email）发送与接收。 文件传输（如FTP）。 即时通讯（如微信、QQ） #### 2. 资源共享   资源共享是计算机网络的核心目标之一，旨在高效利用有限的资源。  硬件资源共享 ：  共享打印机、存储">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://hduroy.github.io/img/logo.png">
 <meta property="article:published_time" content="2025-03-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-25T03:35:18.772Z">
+<meta property="article:modified_time" content="2025-03-25T06:30:49.691Z">
 <meta property="article:author" content="Roy">
 <meta property="article:tag" content="学习笔记">
 <meta name="twitter:card" content="summary">
@@ -16,7 +18,7 @@
   "url": "https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/",
   "image": "https://hduroy.github.io/img/logo.png",
   "datePublished": "2025-03-24T16:00:00.000Z",
-  "dateModified": "2025-03-25T03:35:18.772Z",
+  "dateModified": "2025-03-25T06:30:49.691Z",
   "author": [
     {
       "@type": "Person",
@@ -155,9 +157,121 @@
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: '计算机网络笔记',
   isHighlightShrink: false,
-  isToc: false,
+  isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">计算机网络笔记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-25T03:35:18.772Z" title="更新于 2025-03-25 11:35:18">2025-03-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE%E5%A4%8D%E4%B9%A0/">专业课复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container">
+}</script><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">计算机网络笔记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">计算机网络笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-25T06:30:49.691Z" title="更新于 2025-03-25 14:30:49">2025-03-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE%E5%A4%8D%E4%B9%A0/">专业课复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container">
 
 	<div class="row">
     <embed src="/pdf/计算机网络.pdf" width="100%" height="550" type="application/pdf">
@@ -165,5 +279,412 @@
 
 
 
-<embed src="/pdf/计算机网络.pdf" width="100%" height="750" type="application/pdf">
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">408复试复习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-25</div><div class="info-item-2">408复试复习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/2025/03/24/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" title="随机森林基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-24</div><div class="info-item-2">随机森林基础知识</div></div><div class="info-2"><div class="info-item-1">随机森林的理论基础 随机森林（Random Forest）是一种基于 决策树 的集成学习方法，其理论基础主要来源于以下几个方面：决策树、信息熵与信息增益、以及集成学习的基本原理。下面我们将逐一解释这些概念及其在随机森林中的作用。  1. 决策树 1.1 决策树的基本概念 决策树是一种树形结构的分类或回归模型，它通过递归地对数据进行划分，最终形成一个分层的规则集合。每个节点代表一个特征，每条边代表一个判断条件，而叶节点则代表最终的预测结果（类别或数值）。 决策树的特点：  直观性强：决策树可以被看作一组“if-else”规则，易于理解和解释。 非参数化：不需要对数据分布做任何假设。 灵活性高：既可以用于分类任务，也可以用于回归任务。  构建决策树的关键步骤：  选择分裂特征：根据某种准则（如信息增益、基尼指数等）选择最佳特征进行分裂。 确定分裂点：对于连续特征，需要找到最佳分裂点；对于离散特征，则直接按照类别值进行分裂。 递归构建：重复上述过程，直到满足停止条件（如达到最大深度、节点样本数过少等）。   1.2...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习">408复试复习</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络笔记">计算机网络笔记</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/24/My-New-Post/" title="My First Post">My First Post</a><time datetime="2025-03-24T08:39:38.000Z" title="发表于 2025-03-24 16:39:38">2025-03-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/24/hello-world/" title="Hello World">Hello World</a><time datetime="2025-03-24T07:58:46.246Z" title="发表于 2025-03-24 15:58:46">2025-03-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/24/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" title="随机森林基础知识">随机森林基础知识</a><time datetime="2025-03-23T16:00:00.000Z" title="发表于 2025-03-24 00:00:00">2025-03-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+<h2 id="一计算级网络的功能-1.-数据通信">一、计算级网络的功能
+[[#<strong>1. 数据通信</strong>]]</h2>
+<h4 id="数据通信"><strong>1. 数据通信</strong></h4>
+<ul>
+<li><strong>作用</strong> ：将数据从一个节点传输到另一个节点。</li>
+<li><strong>例子</strong> ：
+<ul>
+<li>电子邮件（Email）发送与接收。</li>
+<li>文件传输（如FTP）。</li>
+<li>即时通讯（如微信、QQ） #### <strong>2. 资源共享</strong></li>
+</ul></li>
+</ul>
+<p>资源共享是计算机网络的核心目标之一，旨在高效利用有限的资源。</p>
+<ul>
+<li><strong>硬件资源共享</strong> ：
+<ul>
+<li>共享打印机、存储设备等。</li>
+<li>云计算中的计算资源（CPU、内存）共享。</li>
+</ul></li>
+<li><strong>软件资源共享</strong> ：
+<ul>
+<li>共享应用程序、数据库等。</li>
+</ul></li>
+<li><strong>数据资源共享</strong> ：
+<ul>
+<li>共享文件、文档、图片等。 #### <strong>3. 分布式处理</strong></li>
+</ul></li>
+</ul>
+<p>分布式处理指将任务分解为多个子任务，分配到不同的计算机上并行处理。</p>
+<ul>
+<li><strong>优势</strong> ：
+<ul>
+<li>提高计算效率。</li>
+<li>增强系统的可靠性和容错能力。</li>
+</ul></li>
+<li><strong>例子</strong> ：
+<ul>
+<li>分布式数据库（如Hadoop）。</li>
+<li>区块链技术中的分布式账本。</li>
+</ul></li>
+</ul>
+<h4 id="可靠性与容错性"><strong>4. 可靠性与容错性</strong></h4>
+<p>网络设计中通常考虑冗余机制，以提高系统的可靠性。</p>
+<ul>
+<li><strong>作用</strong> ：
+<ul>
+<li>当某个节点或链路发生故障时，可以通过备用路径继续通信。</li>
+</ul></li>
+<li><strong>例子</strong> ：
+<ul>
+<li>冗余路由器、负载均衡器。</li>
+<li>网络备份与恢复机制。</li>
+</ul></li>
+</ul>
+<h2 id="二计算级网络的分类">二、计算级网络的分类</h2>
+<p>计算机网络可以根据不同的标准进行分类，例如<strong>覆盖范围、拓扑结构、传输介质、管理方式</strong>等。以下是对计算机网络分类的系统化整理：</p>
+<h3 id="一按覆盖范围分类"><strong>一、按覆盖范围分类</strong></h3>
+<p>根据网络覆盖的地理范围，可以将计算机网络分为以下几类：</p>
+<h4 id="局域网lan-local-area-network"><strong>1. 局域网（LAN, Local Area
+Network）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>覆盖范围较小（通常在几十米到几公里内）。</li>
+<li>高速数据传输（如100Mbps~10Gbps）。</li>
+<li>使用专用通信线路（如以太网、Wi-Fi）。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>家庭网络、办公室网络。</li>
+<li>校园网、企业内部网。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>使用交换机和路由器连接多台电脑组成的网络。</li>
+</ul></li>
+</ul>
+<h4 id="城域网man-metropolitan-area-network"><strong>2. 城域网（MAN,
+Metropolitan Area Network）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>覆盖范围较大（一个城市或地区，通常为5~50公里）。</li>
+<li>数据传输速率较高。</li>
+<li>多用于公共服务（如政府、教育机构之间的互联）。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>城市内的宽带接入网络。</li>
+<li>电信运营商提供的城域网服务。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>通过光纤连接多个局域网形成的城市级网络。</li>
+</ul></li>
+</ul>
+<h4 id="广域网wan-wide-area-network"><strong>3. 广域网（WAN, Wide Area
+Network）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>覆盖范围广（跨城市、国家甚至全球）。</li>
+<li>数据传输速率较低（相比LAN）。</li>
+<li>使用公共通信设施（如电话线、卫星、光纤）。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>互联网（Internet）。</li>
+<li>跨国企业的分支机构互联。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>全球范围内的云计算服务。</li>
+</ul></li>
+</ul>
+<h4 id="个域网pan-personal-area-network"><strong>4. 个域网（PAN,
+Personal Area Network）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>覆盖范围极小（几米范围内）。</li>
+<li>主要用于个人设备之间的通信。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>蓝牙耳机与手机的连接。</li>
+<li>智能手表与手机的数据同步。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>使用蓝牙技术连接的设备网络。</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="二按拓扑结构分类"><strong>二、按拓扑结构分类</strong></h3>
+<p>网络拓扑结构是指网络中节点（如计算机、路由器）和通信链路的物理或逻辑布局。</p>
+<h4 id="星型拓扑star-topology"><strong>1. 星型拓扑（Star
+Topology）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>所有节点通过单独的链路连接到一个==中心节点==（如交换机或集线器）。</li>
+<li>中心节点故障会导致整个网络瘫痪。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>易于管理和扩展。</li>
+<li>单点故障影响较小（除中心节点外）。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>办公室局域网。</li>
+</ul></li>
+</ul>
+<h4 id="总线型拓扑bus-topology"><strong>2. 总线型拓扑（Bus
+Topology）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>所有节点共享一条主干通信线路（总线）。</li>
+<li>数据沿总线传播，所有节点都能接收到。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>结构简单，成本低。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>总线故障会导致整个网络失效。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>小型网络（现已较少使用）。</li>
+</ul></li>
+</ul>
+<h4 id="环型拓扑ring-topology"><strong>3. 环型拓扑（Ring
+Topology）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>节点通过通信链路组成一个闭合环。</li>
+<li>数据沿环单向或双向传输。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>数据传输有序，冲突较少。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>环上任意一点故障会影响整个网络。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>FDDI（光纤分布式数据接口）网络。</li>
+</ul></li>
+</ul>
+<h4 id="网状拓扑mesh-topology"><strong>4. 网状拓扑（Mesh
+Topology）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>每个节点与其他节点之间有多条链路直接连接。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>冗余性强，可靠性高。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>成本高，布线复杂。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>数据中心网络、骨干网。</li>
+</ul></li>
+</ul>
+<h4 id="树型拓扑tree-topology"><strong>5. 树型拓扑（Tree
+Topology）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>类似星型拓扑的扩展，呈层级结构。</li>
+<li>适用于大规模网络。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>易于扩展和管理。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>根节点故障会影响整个网络。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>校园网、企业网络。</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="三按传输介质分类"><strong>三、按传输介质分类</strong></h3>
+<p>根据数据传输所使用的物理介质，网络可以分为以下几类：</p>
+<h4 id="有线网络"><strong>1. 有线网络</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>使用物理介质（如铜线、光纤）传输数据。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>传输速率高，稳定性好。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>布线成本高，移动性差。</li>
+</ul></li>
+<li><strong>常见类型</strong>：
+<ul>
+<li>双绞线（如Cat5e、Cat6）。</li>
+<li>同轴电缆。</li>
+<li>光纤。</li>
+</ul></li>
+</ul>
+<h4 id="无线网络"><strong>2. 无线网络</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>使用电磁波（如无线电波、微波）传输数据。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>移动性强，部署灵活。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>易受干扰，安全性较低。</li>
+</ul></li>
+<li><strong>常见类型</strong>：
+<ul>
+<li>Wi-Fi（IEEE 802.11）。</li>
+<li>蓝牙（Bluetooth）。</li>
+<li>4G/5G蜂窝网络。</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="四按管理方式分类主机间的通信方式"><strong>四、按管理方式分类</strong>（主机间的通信方式）</h3>
+<h4 id="对等网络peer-to-peer-p2p"><strong>1. 对等网络（Peer-to-Peer,
+P2P）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>网络中的每个节点既是客户端又是服务器。</li>
+<li>资源和服务由节点之间直接共享。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>无需专用服务器，成本低。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>安全性较低，管理复杂。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>文件共享（如BitTorrent）。</li>
+<li>区块链网络。</li>
+</ul></li>
+</ul>
+<h4 id="客户端服务器网络clientserver"><strong>2.
+客户端/服务器网络（Client/Server）</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>网络中存在专用的服务器提供服务，客户端请求服务。</li>
+</ul></li>
+<li><strong>优点</strong>：
+<ul>
+<li>管理集中，安全性高。</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>服务器成为单点故障。</li>
+</ul></li>
+<li><strong>应用场景</strong>：
+<ul>
+<li>企业内部网、Web服务。</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="五按用途分类"><strong>五、按用途分类</strong></h3>
+<h4 id="专用网络"><strong>1. 专用网络</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>专为特定组织或目的设计。</li>
+<li>不对外公开。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>军用网络、银行内部网络。</li>
+</ul></li>
+</ul>
+<h4 id="公共网络"><strong>2. 公共网络</strong></h4>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>面向公众开放。</li>
+<li>提供广泛的服务。</li>
+</ul></li>
+<li><strong>例子</strong>：
+<ul>
+<li>互联网（Internet）。</li>
+</ul></li>
+</ul>
+<hr>
+<h3 id="六总结"><strong>六、总结</strong></h3>
+<p>计算机网络的分类可以从多个维度进行，以下是简要总结：</p>
+<table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 33%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr>
+<th><strong>分类标准</strong></th>
+<th><strong>类别</strong></th>
+<th><strong>特点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>覆盖范围</strong></td>
+<td>LAN、MAN、WAN、PAN</td>
+<td>从小范围到全球范围</td>
+</tr>
+<tr>
+<td><strong>拓扑结构</strong></td>
+<td>星型、总线型、环型、网状、树型</td>
+<td>不同的物理或逻辑布局</td>
+</tr>
+<tr>
+<td><strong>传输介质</strong></td>
+<td>有线、无线</td>
+<td>使用不同的物理介质</td>
+</tr>
+<tr>
+<td><strong>管理方式</strong></td>
+<td>P2P、客户端/服务器</td>
+<td>资源共享方式不同</td>
+</tr>
+<tr>
+<td><strong>用途</strong></td>
+<td>专用网络、公共网络</td>
+<td>面向特定用户或公众</td>
+</tr>
+</tbody>
+</table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">https://hduroy.github.io/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">408复试复习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-25</div><div class="info-item-2">408复试复习</div></div><div class="info-2"><div class="info-item-1"> </div></div></div></a><a class="pagination-related" href="/2025/03/24/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" title="随机森林基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-24</div><div class="info-item-2">随机森林基础知识</div></div><div class="info-2"><div class="info-item-1">随机森林的理论基础 随机森林（Random Forest）是一种基于 决策树 的集成学习方法，其理论基础主要来源于以下几个方面：决策树、信息熵与信息增益、以及集成学习的基本原理。下面我们将逐一解释这些概念及其在随机森林中的作用。  1. 决策树 1.1 决策树的基本概念 决策树是一种树形结构的分类或回归模型，它通过递归地对数据进行划分，最终形成一个分层的规则集合。每个节点代表一个特征，每条边代表一个判断条件，而叶节点则代表最终的预测结果（类别或数值）。 决策树的特点：  直观性强：决策树可以被看作一组“if-else”规则，易于理解和解释。 非参数化：不需要对数据分布做任何假设。 灵活性高：既可以用于分类任务，也可以用于回归任务。  构建决策树的关键步骤：  选择分裂特征：根据某种准则（如信息增益、基尼指数等）选择最佳特征进行分裂。 确定分裂点：对于连续特征，需要找到最佳分裂点；对于离散特征，则直接按照类别值进行分裂。 递归构建：重复上述过程，直到满足停止条件（如达到最大深度、节点样本数过少等）。   1.2...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%AE%A1%E7%AE%97%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%9A%84%E5%8A%9F%E8%83%BD-1.-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">一、计算级网络的功能
+[[#1. 数据通信]]</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. 数据通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%B8%8E%E5%AE%B9%E9%94%99%E6%80%A7"><span class="toc-number">1.0.2.</span> <span class="toc-text">4. 可靠性与容错性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%AE%A1%E7%AE%97%E7%BA%A7%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">二、计算级网络的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%8C%89%E8%A6%86%E7%9B%96%E8%8C%83%E5%9B%B4%E5%88%86%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">一、按覆盖范围分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91lan-local-area-network"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 局域网（LAN, Local Area
+Network）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%8E%E5%9F%9F%E7%BD%91man-metropolitan-area-network"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 城域网（MAN,
+Metropolitan Area Network）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%BF%E5%9F%9F%E7%BD%91wan-wide-area-network"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. 广域网（WAN, Wide Area
+Network）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%AA%E5%9F%9F%E7%BD%91pan-personal-area-network"><span class="toc-number">2.1.4.</span> <span class="toc-text">4. 个域网（PAN,
+Personal Area Network）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%8C%89%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.2.</span> <span class="toc-text">二、按拓扑结构分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%9F%E5%9E%8B%E6%8B%93%E6%89%91star-topology"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 星型拓扑（Star
+Topology）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF%E5%9E%8B%E6%8B%93%E6%89%91bus-topology"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. 总线型拓扑（Bus
+Topology）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%9E%8B%E6%8B%93%E6%89%91ring-topology"><span class="toc-number">2.2.3.</span> <span class="toc-text">3. 环型拓扑（Ring
+Topology）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%8A%B6%E6%8B%93%E6%89%91mesh-topology"><span class="toc-number">2.2.4.</span> <span class="toc-text">4. 网状拓扑（Mesh
+Topology）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%9E%8B%E6%8B%93%E6%89%91tree-topology"><span class="toc-number">2.2.5.</span> <span class="toc-text">5. 树型拓扑（Tree
+Topology）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%8C%89%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8%E5%88%86%E7%B1%BB"><span class="toc-number">2.3.</span> <span class="toc-text">三、按传输介质分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E7%BA%BF%E7%BD%91%E7%BB%9C"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. 有线网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C"><span class="toc-number">2.3.2.</span> <span class="toc-text">2. 无线网络</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E6%8C%89%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB%E4%B8%BB%E6%9C%BA%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">四、按管理方式分类（主机间的通信方式）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%AD%89%E7%BD%91%E7%BB%9Cpeer-to-peer-p2p"><span class="toc-number">2.4.1.</span> <span class="toc-text">1. 对等网络（Peer-to-Peer,
+P2P）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9Cclientserver"><span class="toc-number">2.4.2.</span> <span class="toc-text">2.
+客户端&#x2F;服务器网络（Client&#x2F;Server）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E6%8C%89%E7%94%A8%E9%80%94%E5%88%86%E7%B1%BB"><span class="toc-number">2.5.</span> <span class="toc-text">五、按用途分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%93%E7%94%A8%E7%BD%91%E7%BB%9C"><span class="toc-number">2.5.1.</span> <span class="toc-text">1. 专用网络</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%AC%E5%85%B1%E7%BD%91%E7%BB%9C"><span class="toc-number">2.5.2.</span> <span class="toc-text">2. 公共网络</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E6%80%BB%E7%BB%93"><span class="toc-number">2.6.</span> <span class="toc-text">六、总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/408%E5%A4%8D%E4%B9%A0/" title="408复试复习">408复试复习</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/25/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络笔记">计算机网络笔记</a><time datetime="2025-03-24T16:00:00.000Z" title="发表于 2025-03-25 00:00:00">2025-03-25</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/24/My-New-Post/" title="My First Post">My First Post</a><time datetime="2025-03-24T08:39:38.000Z" title="发表于 2025-03-24 16:39:38">2025-03-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/24/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/" title="随机森林基础知识">随机森林基础知识</a><time datetime="2025-03-23T16:00:00.000Z" title="发表于 2025-03-24 00:00:00">2025-03-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
