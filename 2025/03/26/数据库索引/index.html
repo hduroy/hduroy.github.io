@@ -1,0 +1,594 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据库索引 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在数据库查询中，回表（Index Lookup） 和 索引覆盖（Covering Index） 是两个与索引相关的概念，它们直接影响查询性能。以下是对这两个概念的详细解释。       数据库索引是一种用于提高查询性能的数据结构。它类似于书籍的目录，通过为表中的某些列创建索引，可以加速数据检索操作，而无需扫描整个表。    1. 什么是数据库索引？ 定义  索引是数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库索引">
+<meta property="og:url" content="https://hduroy.github.io/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/index.html">
+<meta property="og:site_name" content="Roy&#39;s Blog">
+<meta property="og:description" content="在数据库查询中，回表（Index Lookup） 和 索引覆盖（Covering Index） 是两个与索引相关的概念，它们直接影响查询性能。以下是对这两个概念的详细解释。       数据库索引是一种用于提高查询性能的数据结构。它类似于书籍的目录，通过为表中的某些列创建索引，可以加速数据检索操作，而无需扫描整个表。    1. 什么是数据库索引？ 定义  索引是数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hduroy.github.io/img/logo.png">
+<meta property="article:published_time" content="2025-03-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-26T08:17:35.013Z">
+<meta property="article:author" content="Roy">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hduroy.github.io/img/logo.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数据库索引",
+  "url": "https://hduroy.github.io/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/",
+  "image": "https://hduroy.github.io/img/logo.png",
+  "datePublished": "2025-03-25T16:00:00.000Z",
+  "dateModified": "2025-03-26T08:17:35.013Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Roy",
+      "url": "https://hduroy.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hduroy.github.io/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库索引',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">数据库索引</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数据库索引</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-26T08:17:35.013Z" title="更新于 2025-03-26 16:17:35">2025-03-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE%E5%A4%8D%E4%B9%A0/">专业课复习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在数据库查询中，<strong>回表（Index Lookup）</strong> 和
+<strong>索引覆盖（Covering Index）</strong>
+是两个与索引相关的概念，它们直接影响查询性能。以下是对这两个概念的详细解释。</p>
+<table style="width:6%;">
+<colgroup>
+<col style="width: 5%" />
+</colgroup>
+<tbody>
+<tr>
+<td>数据库索引是一种用于提高查询性能的数据结构。它类似于书籍的目录，通过为表中的某些列创建索引，可以加速数据检索操作，而无需扫描整个表。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="什么是数据库索引"><strong>1. 什么是数据库索引？</strong></h2>
+<h3 id="定义"><strong>定义</strong></h3>
+<ul>
+<li>索引是数据库中一种特殊的数据结构（通常是 B
+树或哈希表），用于快速定位数据。</li>
+<li>它通过存储列值及其对应的行位置（物理地址或逻辑指针）来加速查询。</li>
+</ul>
+<h3 id="类比"><strong>类比</strong></h3>
+<ul>
+<li>索引的作用类似于字典中的拼音索引或书籍的目录。通过索引，可以快速找到目标内容，而无需逐页查找。</li>
+</ul>
+<hr />
+<h2 id="索引的工作原理"><strong>2. 索引的工作原理</strong></h2>
+<h3 id="数据存储与检索"><strong>2.1 数据存储与检索</strong></h3>
+<ul>
+<li>在没有索引的情况下，数据库需要进行<strong>全表扫描</strong>（Full
+Table Scan），逐一检查每一行是否满足条件。</li>
+<li>使用索引后，数据库可以直接定位到符合条件的行，从而减少 I/O 操作和
+CPU 开销。</li>
+</ul>
+<h3 id="常见索引结构"><strong>2.2 常见索引结构</strong></h3>
+<ol type="1">
+<li><strong>B 树索引</strong>：
+<ul>
+<li>最常见的索引类型，适用于范围查询和排序操作。</li>
+<li>数据按顺序存储，支持快速查找、插入和删除。</li>
+<li>示例：MySQL 的 InnoDB 存储引擎默认使用 B+ 树索引。</li>
+</ul></li>
+<li><strong>哈希索引</strong>：
+<ul>
+<li>使用哈希函数将键值映射到存储位置。</li>
+<li>适用于等值查询（如 <code>=</code> 或
+<code>IN</code>），但不支持范围查询或排序。</li>
+<li>示例：MySQL 的 Memory 存储引擎支持哈希索引。</li>
+</ul></li>
+<li><strong>全文索引</strong>：
+<ul>
+<li>用于全文搜索，支持对文本内容进行关键词匹配。</li>
+<li>示例：MySQL 和 PostgreSQL 提供全文索引功能。</li>
+</ul></li>
+<li><strong>位图索引</strong>：
+<ul>
+<li>适用于低基数列（如性别、状态等），用位图表示数据分布。</li>
+<li>示例：Oracle 支持位图索引。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="创建索引"><strong>3. 创建索引</strong></h2>
+<h3 id="语法"><strong>3.1 语法</strong></h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX index_name <span class="keyword">ON</span> table_name (column1, column2, ...);</span><br></pre></td></tr></table></figure>
+<h4 id="示例">示例：</h4>
+<p>为 <code>students</code> 表的 <code>name</code> 列创建索引：
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name <span class="keyword">ON</span> students (name);</span><br></pre></td></tr></table></figure></p>
+<h3 id="复合索引"><strong>3.2 复合索引</strong></h3>
+<ul>
+<li>复合索引是在多个列上创建的索引。</li>
+<li>查询时，只有使用索引最左侧的列才能利用索引。</li>
+</ul>
+<h4 id="示例-1">示例：</h4>
+<p>为 <code>students</code> 表的 <code>name</code> 和 <code>age</code>
+列创建复合索引： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name_age <span class="keyword">ON</span> students (name, age);</span><br></pre></td></tr></table></figure></p>
+<hr />
+<h2 id="索引的优点"><strong>4. 索引的优点</strong></h2>
+<ol type="1">
+<li><strong>提高查询速度</strong>：
+<ul>
+<li>索引可以显著加速数据检索操作，特别是对于大表。</li>
+</ul></li>
+<li><strong>支持排序和分组</strong>：
+<ul>
+<li>索引可以避免额外的排序操作（如 <code>ORDER BY</code> 和
+<code>GROUP BY</code>）。</li>
+</ul></li>
+<li><strong>唯一性约束</strong>：
+<ul>
+<li>唯一索引（Unique Index）可以确保列值的唯一性。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="索引的缺点"><strong>5. 索引的缺点</strong></h2>
+<ol type="1">
+<li><strong>占用存储空间</strong>：
+<ul>
+<li>索引需要额外的存储空间，尤其是复合索引或多列索引。</li>
+</ul></li>
+<li><strong>降低写操作性能</strong>：
+<ul>
+<li>插入、更新和删除操作需要同步维护索引，增加了开销。</li>
+</ul></li>
+<li><strong>不适合所有查询</strong>：
+<ul>
+<li>如果查询条件不使用索引列，或者返回的结果集较大，索引可能不会被使用。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="索引的使用场景"><strong>6. 索引的使用场景</strong></h2>
+<h3 id="适合使用索引的场景"><strong>6.1 适合使用索引的场景</strong></h3>
+<ol type="1">
+<li><strong>频繁查询的列</strong>：
+<ul>
+<li>对于经常出现在
+<code>WHERE</code>、<code>JOIN</code>、<code>ORDER BY</code> 或
+<code>GROUP BY</code> 中的列，建议创建索引。</li>
+</ul></li>
+<li><strong>主键和外键</strong>：
+<ul>
+<li>主键和外键通常会自动创建索引（如 MySQL 的 InnoDB 存储引擎）。</li>
+</ul></li>
+<li><strong>高选择性列</strong>：
+<ul>
+<li>选择性高的列（即列中值的分布较广）更适合创建索引。例如，身份证号比性别更适合创建索引。</li>
+</ul></li>
+</ol>
+<h3 id="不适合使用索引的场景"><strong>6.2
+不适合使用索引的场景</strong></h3>
+<ol type="1">
+<li><strong>小表</strong>：
+<ul>
+<li>对于小表（如少于几千行），全表扫描可能比使用索引更快。</li>
+</ul></li>
+<li><strong>低选择性列</strong>：
+<ul>
+<li>对于值分布较少的列（如性别、状态），索引效果较差。</li>
+</ul></li>
+<li><strong>频繁更新的列</strong>：
+<ul>
+<li>如果列值频繁更新，维护索引的成本较高。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="索引的类型"><strong>7. 索引的类型</strong></h2>
+<h3 id="单列索引"><strong>7.1 单列索引</strong></h3>
+<ul>
+<li>在单个列上创建的索引。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_age <span class="keyword">ON</span> students (age);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="复合索引-1"><strong>7.2 复合索引</strong></h3>
+<ul>
+<li>在多个列上创建的索引。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name_age <span class="keyword">ON</span> students (name, age);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="唯一索引"><strong>7.3 唯一索引</strong></h3>
+<ul>
+<li>确保列值的唯一性。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">UNIQUE</span> INDEX idx_email <span class="keyword">ON</span> users (email);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="全文索引"><strong>7.4 全文索引</strong></h3>
+<ul>
+<li>用于全文搜索。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> FULLTEXT INDEX idx_description <span class="keyword">ON</span> products (description);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr />
+<h2 id="索引的最佳实践"><strong>8. 索引的最佳实践</strong></h2>
+<ol type="1">
+<li><strong>选择合适的列</strong>：
+<ul>
+<li>优先为查询频率高、过滤性强的列创建索引。</li>
+</ul></li>
+<li><strong>避免过多索引</strong>：
+<ul>
+<li>索引会增加存储和维护成本，应根据实际需求创建。</li>
+</ul></li>
+<li><strong>定期优化索引</strong>：
+<ul>
+<li>使用数据库工具（如 <code>ANALYZE</code> 或
+<code>OPTIMIZE TABLE</code>）分析和优化索引。</li>
+</ul></li>
+<li><strong>监控索引使用情况</strong>：
+<ul>
+<li>使用执行计划（<code>EXPLAIN</code>）查看查询是否使用了索引。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="执行计划explain"><strong>9. 执行计划（EXPLAIN）</strong></h2>
+<p><code>EXPLAIN</code>
+是一个重要的工具，用于分析查询是否使用了索引以及如何优化查询。</p>
+<h4 id="示例-2">示例：</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;Alice&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>输出示例</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 13%" />
+<col style="width: 10%" />
+<col style="width: 7%" />
+<col style="width: 16%" />
+<col style="width: 9%" />
+<col style="width: 9%" />
+<col style="width: 7%" />
+<col style="width: 6%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>SIMPLE</td>
+<td>students</td>
+<td>const</td>
+<td>idx_name</td>
+<td>idx_name</td>
+<td>767</td>
+<td>const</td>
+<td>1</td>
+<td>Using index</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>type</strong>：访问类型（如
+<code>const</code>、<code>range</code>、<code>index</code> 等）。</li>
+<li><strong>key</strong>：使用的索引名称。</li>
+<li><strong>rows</strong>：扫描的行数。</li>
+<li><strong>Extra</strong>：额外信息（如是否使用索引）。</li>
+</ul>
+<hr />
+<h2 id="总结"><strong>10. 总结</strong></h2>
+<ul>
+<li><strong>索引的核心作用</strong>：加速查询，减少 I/O 操作。</li>
+<li><strong>索引的代价</strong>：占用存储空间，降低写操作性能。</li>
+<li><strong>最佳实践</strong>：根据查询需求创建合适的索引，并定期优化。</li>
+</ul>
+<p>如果你有更多问题或需要进一步解释，请随时提问！</p>
+<hr />
+<h2 id="回表index-lookup"><strong>1. 回表（Index Lookup）</strong></h2>
+<h3 id="定义-1"><strong>定义</strong></h3>
+<ul>
+<li><strong>回表</strong>
+是指当查询需要访问的数据无法完全通过索引满足时，数据库引擎需要回到主表（或聚簇索引）中查找完整的数据行。</li>
+<li>换句话说，如果索引中不包含所有查询所需的列，数据库必须先通过索引找到行的位置，然后再从主表中读取其他列的数据。</li>
+</ul>
+<h3 id="工作原理"><strong>工作原理</strong></h3>
+<ol type="1">
+<li>数据库使用索引定位符合条件的行。</li>
+<li>如果索引中没有包含查询所需的所有列，数据库需要根据索引中的行指针（Row
+ID 或主键值）返回到主表中查找完整数据。</li>
+</ol>
+<h3 id="示例-3"><strong>示例</strong></h3>
+<p>假设有一个表 <code>students</code>：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>age</th>
+<th>gender</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Alice</td>
+<td>20</td>
+<td>Female</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bob</td>
+<td>22</td>
+<td>Male</td>
+</tr>
+</tbody>
+</table>
+<p>为 <code>name</code> 列创建了一个普通索引： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name <span class="keyword">ON</span> students (name);</span><br></pre></td></tr></table></figure></p>
+<p>执行以下查询： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;Alice&#x27;</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="执行过程">执行过程：</h4>
+<ol type="1">
+<li>数据库通过索引 <code>idx_name</code> 快速定位到
+<code>name = 'Alice'</code> 的行。</li>
+<li>==索引中只存储了 <code>name</code> 列和对应的主键值（如
+<code>id</code>），而查询需要返回所有列（<code>*</code>）。==</li>
+<li>==数据库需要根据索引中的主键值回到主表中查找完整的行数据（即
+<code>id</code>, <code>age</code>, <code>gender</code> 等列）。==</li>
+<li>==这个“回到主表”的过程就是<strong>回表</strong>。==</li>
+</ol>
+<hr />
+<h3 id="回表的代价"><strong>回表的代价</strong></h3>
+<ul>
+<li><strong>I/O 开销</strong>：回表会导致额外的磁盘 I/O
+操作，因为需要从索引跳转到主表。</li>
+<li><strong>性能影响</strong>：对于大表或复杂查询，回表可能会显著降低查询性能。</li>
+</ul>
+<hr />
+<h2 id="索引覆盖covering-index"><strong>2. 索引覆盖（Covering
+Index）</strong></h2>
+<h3 id="定义-2"><strong>定义</strong></h3>
+<ul>
+<li><strong>索引覆盖</strong>
+是指查询所需的所有列都可以直接从索引中获取，而无需回表访问主表。</li>
+<li>换句话说，如果一个索引包含了查询中涉及的所有列，则该索引被称为“覆盖索引”。</li>
+</ul>
+<h3 id="工作原理-1"><strong>工作原理</strong></h3>
+<ol type="1">
+<li>数据库通过索引直接获取查询结果，无需额外访问主表。</li>
+<li>覆盖索引可以显著减少 I/O 操作，提高查询性能。</li>
+</ol>
+<h3 id="示例-4"><strong>示例</strong></h3>
+<p>继续使用上面的 <code>students</code> 表，并为 <code>name</code> 和
+<code>age</code> 列创建复合索引： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_name_age <span class="keyword">ON</span> students (name, age);</span><br></pre></td></tr></table></figure></p>
+<p>执行以下查询： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name, age <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;Alice&#x27;</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="执行过程-1">执行过程：</h4>
+<ol type="1">
+<li>数据库通过索引 <code>idx_name_age</code> 定位到
+<code>name = 'Alice'</code> 的行。</li>
+<li>索引中已经包含了 <code>name</code> 和 <code>age</code>
+列，因此无需回表访问主表。</li>
+<li>查询结果直接从索引中返回。</li>
+</ol>
+<p>这种情况下，索引 <code>idx_name_age</code>
+就是一个<strong>覆盖索引</strong>，因为它满足了查询所需的所有列。</p>
+<hr />
+<h3 id="索引覆盖的优势"><strong>索引覆盖的优势</strong></h3>
+<ol type="1">
+<li><strong>减少 I/O 操作</strong>：无需回表，减少了磁盘访问次数。</li>
+<li><strong>提高查询性能</strong>：索引通常比主表更小，扫描索引的速度更快。</li>
+<li><strong>优化复杂查询</strong>：对于多列查询，覆盖索引可以避免多次访问主表。</li>
+</ol>
+<hr />
+<h2 id="回表-vs-索引覆盖"><strong>3. 回表 vs 索引覆盖</strong></h2>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 36%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th>特性</th>
+<th>回表</th>
+<th>索引覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>是否访问主表</strong></td>
+<td>需要回表访问主表</td>
+<td>无需回表，直接从索引获取数据</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>较慢，存在额外 I/O 开销</td>
+<td>较快，减少 I/O 操作</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>查询需要的列不在索引中</td>
+<td>查询需要的列都在索引中</td>
+</tr>
+<tr>
+<td><strong>索引设计要求</strong></td>
+<td>索引只需包含过滤条件列</td>
+<td>索引需包含查询涉及的所有列</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="如何实现索引覆盖"><strong>4. 如何实现索引覆盖</strong></h2>
+<p>为了实现索引覆盖，需要注意以下几点：</p>
+<ol type="1">
+<li><strong>选择合适的列</strong>：
+<ul>
+<li>确保索引包含查询中涉及的所有列。</li>
+<li>对于 <code>SELECT</code> 语句，尽量避免使用
+<code>*</code>，而是明确列出所需的列。</li>
+</ul></li>
+<li><strong>使用复合索引</strong>：
+<ul>
+<li>创建包含多个列的复合索引。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX idx_columns <span class="keyword">ON</span> table_name (col1, col2, col3);</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><strong>分析查询需求</strong>：
+<ul>
+<li>使用 <code>EXPLAIN</code>
+分析查询计划，确认是否使用了索引覆盖。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN <span class="keyword">SELECT</span> col1, col2 <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> col1 <span class="operator">=</span> <span class="string">&#x27;value&#x27;</span>;</span><br></pre></td></tr></table></figure> 如果输出中显示
+<code>Using index</code>，说明查询使用了覆盖索引。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="实际应用场景"><strong>5. 实际应用场景</strong></h2>
+<h3 id="回表的场景"><strong>5.1 回表的场景</strong></h3>
+<ul>
+<li>查询需要的列不在索引中。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;Alice&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="索引覆盖的场景"><strong>5.2 索引覆盖的场景</strong></h3>
+<ul>
+<li>查询需要的列都在索引中。</li>
+<li>示例： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> name, age <span class="keyword">FROM</span> students <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;Alice&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr />
+<h2 id="总结-1"><strong>6. 总结</strong></h2>
+<ul>
+<li><strong>回表</strong>
+是指查询需要的数据无法完全通过索引满足时，数据库需要回到主表中查找完整数据。</li>
+<li><strong>索引覆盖</strong>
+是指查询所需的所有列都可以直接从索引中获取，从而避免回表操作。</li>
+<li><strong>优化建议</strong>：
+<ul>
+<li>尽量设计覆盖索引以减少回表。</li>
+<li>使用 <code>EXPLAIN</code> 分析查询计划，确认索引使用情况。</li>
+</ul></li>
+</ul>
+<p>如果你有更多问题或需要进一步解释，请随时提问！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">https://hduroy.github.io/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="数据库数据类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数据库数据类型</div></div><div class="info-2"><div class="info-item-1">在数据库中，数据类型用于定义列（字段）可以存储的数据种类。选择正确的数据类型不仅可以提高存储效率，还能优化查询性能。以下是常见数据库系统（如 MySQL、PostgreSQL、SQL Server 等）中常用的数据类型分类及其说明：  1. 数值类型 数值类型用于存储整数或浮点数。 1.1 整数类型  TINYINT  存储范围：-128 到 127（有符号），0 到 255（无符号）。  用途：用于存储小范围的整数，如布尔值（0 或 1）。  SMALLINT  存储范围：-32,768 到 32,767（有符号），0 到 65,535（无符号）。  用途：用于存储较小的整数。  MEDIUMINT  存储范围：-8,388,608 到 8,388,607（有符号），0 到 16,777,215（无符号）。  用途：MySQL 特有的中间范围整数类型。  INT / INTEGER  存储范围：-2,147,483,648 到 2,147,483,647（有符号），0...</div></div></div></a><a class="pagination-related" href="/2025/03/26/%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" title="窗口函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">窗口函数</div></div><div class="info-2"><div class="info-item-1">窗口函数（Window Function） 是 SQL 中一种强大的工具，用于在查询结果集中执行复杂的分析和计算操作。与传统的聚合函数（如 SUM()、AVG() 等）不同，窗口函数不会将结果集分组为单个输出行，而是保留每一行的详细信息，同时基于一组相关的行（称为“窗口”）进行计算。  1. 窗口函数的基本概念 1.1 什么是窗口？  窗口 是指一个逻辑上的数据子集，通常通过某些条件（如分组或排序）定义。 窗口函数在每个窗口内执行计算，但不会改变原始数据的结构。  1.2 窗口函数的特点  保留原始行：  聚合函数（如 GROUP BY）会将多行数据压缩为一行。 窗口函数则保留每一行的详细信息，同时提供额外的计算列。  灵活性高：  可以在不改变表结构的情况下，执行复杂的排名、累计求和、移动平均等操作。  高效性：  窗口函数避免了多次扫描表的需求，性能优于嵌套查询或自连接。    2. 窗口函数的语法 窗口函数的通用语法如下： 12345function_name(expression) OVER (   ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="数据库基本操作"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数据库基本操作</div></div><div class="info-2"><div class="info-item-1">数据库的基础操作是学习和使用数据库的核心内容，涵盖了数据的增删改查（CRUD）以及表结构的管理。以下是对数据库基础操作的全面介绍，分为以下几个部分：  数据库函数的遍历顺序是从上到下，外到内的，可以类比为一层层for循环来理解，这个理解不太正确 1. SQL 查询的逻辑执行顺序 SQL 查询的执行顺序并不是按照书写顺序（从上到下）执行的，而是遵循一个固定的逻辑顺序。以下是 SQL 查询的关键步骤及其执行顺序：  FROM 和 JOIN ：  确定数据来源表，并进行表连接。 这是最先执行的部分，决定了查询的基础数据集。  WHERE ：  对基础数据集进行过滤，保留符合条件的行。  GROUP BY ：  将数据按指定列分组。  HAVING ：  对分组后的数据进行过滤。  SELECT ：  选择需要返回的列，并应用表达式或函数。  DISTINCT ：  去重操作。  ORDER BY ：  对结果进行排序。  LIMIT / OFFSET ：  限制返回的行数。 ## 1....</div></div></div></a><a class="pagination-related" href="/2025/03/26/SQL%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E9%99%A4%E6%B3%95/" title="SQL关系运算除法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">SQL关系运算除法</div></div><div class="info-2"><div class="info-item-1">在数据库的基本运算中，“除法（Division, ÷）” 是一种较为复杂的操作，但它在某些查询场景中非常重要。它主要用于处理“包含关系”的问题，例如找出满足某种条件的所有组合。  1. 什么是除法运算？ 除法运算是关系代数中的一种操作，用于解决以下问题： - 给定两个关系 R 和 S，其中 R 包含一组属性集 A ∪ B，而 S 包含属性集 B。 - 我们希望找到那些在 R 中的元组，其在 A 属性上的值可以与 S 中所有元组匹配。 换句话说，除法运算寻找的是“完全包含”的关系。 象集包含投影 \[ \text{象集}(a) = \{ b \mid (a, b) \in R \} \]  2. 除法的符号表示 给定两个关系 R(A, B) 和 S(B)，其中： - R 是一个具有属性 A 和 B 的关系。 - S 是一个只有属性 B 的关系。 除法运算的结果是一个新的关系 T(A)，其定义为： \[ T = R \div S = \{ a \in A \mid \forall b \in S, (a, b) \in R...</div></div></div></a><a class="pagination-related" href="/2025/03/25/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-25</div><div class="info-item-2">数据库</div></div><div class="info-2"><div class="info-item-1">数据库系统是现代信息系统的核心组件之一，它用于存储、管理和检索数据。以下是对数据库系统相关知识的详细梳理，分为几个关键部分进行讲解：  1. 数据库系统的基本概念 (1) 数据库（Database）  数据库是一个有组织的数据集合，通常以电子形式存储在计算机系统中。 它的主要特点包括：结构化、持久性和共享性。  (2) 数据库管理系统（DBMS）  DBMS 是一种==软件系统==，用于创建、管理、查询和维护数据库。 常见的 DBMS 包括：  关系型数据库管理系统（RDBMS）：如 MySQL、PostgreSQL、Oracle、SQL Server。 非关系型数据库（NoSQL）：如 MongoDB、Redis、Cassandra。   (3) 数据库系统（DBS）的组成 数据库系统通常由以下几个部分组成： 1. 硬件：服务器、存储设备等。 2. 软件：DBMS 软件及其相关工具。 3. 数据：实际存储在数据库中的信息，是描述事务的符号记录。（Data) 4. 用户： - 最终用户：通过应用程序访问数据库。...</div></div></div></a><a class="pagination-related" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7/" title="数据库的完整性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数据库的完整性</div></div><div class="info-2"><div class="info-item-1">完整性与安全性区别          完整性 安全性     目的 防止数据库中存在不符合语义的数据，即防止数据库中存在不正确睡觉 保护数据库防止恶意破坏和非法存取   防范对象 不符合语义、不正确的数据，防止其进入数据库 非法用户和非法操作，防止其对数据库数据的非法存取    数据库完整性约束（Database Integrity Constraints）是指在数据库中定义的一组规则，用于确保数据的准确性、一致性和可靠性。这些约束是数据库管理系统（DBMS）的核心功能之一，旨在防止不符合规则的数据被插入、更新或删除。通过实施完整性约束，可以避免数据的冗余、不一致和错误。 以下是数据库完整性约束的主要类型及其详细说明：  1. 实体完整性（Entity Integrity） 实体完整性要求每个表中的每一行必须具有唯一的标识符（主键），并且主键的值不能为 NULL。 - 目的：确保每一条记录都可以被唯一识别。 - 实现方式： - 定义主键（Primary Key）。...</div></div></div></a><a class="pagination-related" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="数据库数据类型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数据库数据类型</div></div><div class="info-2"><div class="info-item-1">在数据库中，数据类型用于定义列（字段）可以存储的数据种类。选择正确的数据类型不仅可以提高存储效率，还能优化查询性能。以下是常见数据库系统（如 MySQL、PostgreSQL、SQL Server 等）中常用的数据类型分类及其说明：  1. 数值类型 数值类型用于存储整数或浮点数。 1.1 整数类型  TINYINT  存储范围：-128 到 127（有符号），0 到 255（无符号）。  用途：用于存储小范围的整数，如布尔值（0 或 1）。  SMALLINT  存储范围：-32,768 到 32,767（有符号），0 到 65,535（无符号）。  用途：用于存储较小的整数。  MEDIUMINT  存储范围：-8,388,608 到 8,388,607（有符号），0 到 16,777,215（无符号）。  用途：MySQL 特有的中间范围整数类型。  INT / INTEGER  存储范围：-2,147,483,648 到 2,147,483,647（有符号），0...</div></div></div></a><a class="pagination-related" href="/2025/03/26/%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" title="窗口函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">窗口函数</div></div><div class="info-2"><div class="info-item-1">窗口函数（Window Function） 是 SQL 中一种强大的工具，用于在查询结果集中执行复杂的分析和计算操作。与传统的聚合函数（如 SUM()、AVG() 等）不同，窗口函数不会将结果集分组为单个输出行，而是保留每一行的详细信息，同时基于一组相关的行（称为“窗口”）进行计算。  1. 窗口函数的基本概念 1.1 什么是窗口？  窗口 是指一个逻辑上的数据子集，通常通过某些条件（如分组或排序）定义。 窗口函数在每个窗口内执行计算，但不会改变原始数据的结构。  1.2 窗口函数的特点  保留原始行：  聚合函数（如 GROUP BY）会将多行数据压缩为一行。 窗口函数则保留每一行的详细信息，同时提供额外的计算列。  灵活性高：  可以在不改变表结构的情况下，执行复杂的排名、累计求和、移动平均等操作。  高效性：  窗口函数避免了多次扫描表的需求，性能优于嵌套查询或自连接。    2. 窗口函数的语法 窗口函数的通用语法如下： 12345function_name(expression) OVER (   ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是数据库索引？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E6%AF%94"><span class="toc-number">1.2.</span> <span class="toc-text">类比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. 索引的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E4%B8%8E%E6%A3%80%E7%B4%A2"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 数据存储与检索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 常见索引结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="toc-number">3.</span> <span class="toc-text">3. 创建索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.1.</span> <span class="toc-text">示例：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 复合索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">4. 索引的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">5. 索引的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.</span> <span class="toc-text">6. 索引的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 适合使用索引的场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E9%80%82%E5%90%88%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">6.2.</span> <span class="toc-text">6.2
+不适合使用索引的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.</span> <span class="toc-text">7. 索引的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%88%97%E7%B4%A2%E5%BC%95"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 单列索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95-1"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 复合索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 唯一索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95"><span class="toc-number">7.4.</span> <span class="toc-text">7.4 全文索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">8.</span> <span class="toc-text">8. 索引的最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92explain"><span class="toc-number">9.</span> <span class="toc-text">9. 执行计划（EXPLAIN）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="toc-number">9.0.1.</span> <span class="toc-text">示例：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">10. 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E8%A1%A8index-lookup"><span class="toc-number">11.</span> <span class="toc-text">1. 回表（Index Lookup）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">11.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">11.2.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="toc-number">11.3.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">11.3.1.</span> <span class="toc-text">执行过程：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%A1%A8%E7%9A%84%E4%BB%A3%E4%BB%B7"><span class="toc-number">11.4.</span> <span class="toc-text">回表的代价</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96covering-index"><span class="toc-number">12.</span> <span class="toc-text">2. 索引覆盖（Covering
+Index）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="toc-number">12.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86-1"><span class="toc-number">12.2.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-4"><span class="toc-number">12.3.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B-1"><span class="toc-number">12.3.1.</span> <span class="toc-text">执行过程：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">12.4.</span> <span class="toc-text">索引覆盖的优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E8%A1%A8-vs-%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96"><span class="toc-number">13.</span> <span class="toc-text">3. 回表 vs 索引覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96"><span class="toc-number">14.</span> <span class="toc-text">4. 如何实现索引覆盖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">15.</span> <span class="toc-text">5. 实际应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E8%A1%A8%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">15.1.</span> <span class="toc-text">5.1 回表的场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">15.2.</span> <span class="toc-text">5.2 索引覆盖的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">16.</span> <span class="toc-text">6. 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" title="数据库基本操作">数据库基本操作</a><time datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/26/SQL%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E9%99%A4%E6%B3%95/" title="SQL关系运算除法">SQL关系运算除法</a><time datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7/" title="数据库的完整性">数据库的完整性</a><time datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="数据库数据类型">数据库数据类型</a><time datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/26/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" title="数据库索引">数据库索引</a><time datetime="2025-03-25T16:00:00.000Z" title="发表于 2025-03-26 00:00:00">2025-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
