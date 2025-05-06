@@ -1,253 +1,0 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Lamda表达式 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="是的，这段代码中的 [](const Point&amp; a, const Point&amp; b) &#123; return a.x &#x3D;&#x3D; b.x &amp;&amp; a.y &#x3D;&#x3D; b.y; &#125; 是一个 Lambda 表达式（也叫 Lambda 函数）。它是 C++11 引入的一种简洁定义匿名函数的方式。  1. 什么是 Lambda 表达式？ Lambda 表">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Lamda表达式">
-<meta property="og:url" content="https://hduroy.github.io/2025/03/29/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
-<meta property="og:site_name" content="Roy&#39;s Blog">
-<meta property="og:description" content="是的，这段代码中的 [](const Point&amp; a, const Point&amp; b) &#123; return a.x &#x3D;&#x3D; b.x &amp;&amp; a.y &#x3D;&#x3D; b.y; &#125; 是一个 Lambda 表达式（也叫 Lambda 函数）。它是 C++11 引入的一种简洁定义匿名函数的方式。  1. 什么是 Lambda 表达式？ Lambda 表">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://hduroy.github.io/img/logo.png">
-<meta property="article:published_time" content="2025-03-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-29T07:52:28.345Z">
-<meta property="article:author" content="Roy">
-<meta property="article:tag" content="数据结构">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://hduroy.github.io/img/logo.png"><script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Lamda表达式",
-  "url": "https://hduroy.github.io/2025/03/29/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/",
-  "image": "https://hduroy.github.io/img/logo.png",
-  "datePublished": "2025-03-28T16:00:00.000Z",
-  "dateModified": "2025-03-29T07:52:28.345Z",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "Roy",
-      "url": "https://hduroy.github.io/"
-    }
-  ]
-}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hduroy.github.io/2025/03/29/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
-    (() => {
-      
-    const saveToLocal = {
-      set: (key, value, ttl) => {
-        if (!ttl) return
-        const expiry = Date.now() + ttl * 86400000
-        localStorage.setItem(key, JSON.stringify({ value, expiry }))
-      },
-      get: key => {
-        const itemStr = localStorage.getItem(key)
-        if (!itemStr) return undefined
-        const { value, expiry } = JSON.parse(itemStr)
-        if (Date.now() > expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return value
-      }
-    }
-
-    window.btf = {
-      saveToLocal,
-      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
-        script.onload = script.onreadystatechange = () => {
-          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
-        }
-        script.onerror = reject
-        document.head.appendChild(script)
-      }),
-      getCSS: (url, id) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onload = link.onreadystatechange = () => {
-          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
-        }
-        link.onerror = reject
-        document.head.appendChild(link)
-      }),
-      addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
-        const globalFn = parent.globalFn || {}
-        globalFn[key] = globalFn[key] || {}
-        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
-        parent.globalFn = globalFn
-      }
-    }
-  
-      
-      const activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      const activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-
-      btf.activateDarkMode = activateDarkMode
-      btf.activateLightMode = activateLightMode
-
-      const theme = saveToLocal.get('theme')
-    
-          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
-        
-      
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
-      }
-    
-      
-    const detectApple = () => {
-      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-  
-    })()
-  </script><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
-  copy: {
-    success: '复制成功',
-    error: '复制失败',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'null',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyloadPlugin: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Lamda表达式',
-  isHighlightShrink: false,
-  isToc: true,
-  pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Lamda表达式</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Lamda表达式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-28T16:00:00.000Z" title="发表于 2025-03-29 00:00:00">2025-03-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-29T07:52:28.345Z" title="更新于 2025-03-29 15:52:28">2025-03-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>是的，这段代码中的
-<code>[](const Point&amp; a, const Point&amp; b) &#123; return a.x == b.x &amp;&amp; a.y == b.y; &#125;</code>
-是一个 <strong>Lambda 表达式</strong>（也叫 Lambda 函数）。它是 C++11
-引入的一种简洁定义匿名函数的方式。</p>
-<hr />
-<h3 id="什么是-lambda-表达式">1. <strong>什么是 Lambda
-表达式？</strong></h3>
-<p>Lambda
-表达式是一种在代码中直接定义匿名函数的语法。它允许你快速创建一个简单的函数对象，而无需显式地定义一个具名函数。</p>
-<h4 id="基本语法">基本语法：</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[capture](parameters) -&gt; return_type &#123; body &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>capture</strong>：捕获列表，用于捕获外部变量。可以为空。</li>
-<li><strong>parameters</strong>：参数列表，与普通函数的参数列表类似。</li>
-<li><strong>return_type</strong>：返回类型（可选）。如果编译器能推断出返回类型，则可以省略。</li>
-<li><strong>body</strong>：函数体，包含实际执行的代码。</li>
-</ul>
-<hr />
-<h3 id="分解你的-lambda-表达式">2. <strong>分解你的 Lambda
-表达式</strong></h3>
-<p>以下是你的代码中的 Lambda 表达式的分解：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[](<span class="type">const</span> Point&amp; a, <span class="type">const</span> Point&amp; b) &#123;</span><br><span class="line">    <span class="keyword">return</span> a.x == b.x &amp;&amp; a.y == b.y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="各部分含义">各部分含义：</h4>
-<ol type="1">
-<li><strong><code>[]</code></strong>：
-<ul>
-<li>捕获列表，表示这个 Lambda 不需要访问任何外部变量。</li>
-<li>如果需要访问外部变量，可以在 <code>[]</code> 中指定，例如
-<code>[&amp;]</code> 或 <code>[=]</code>。</li>
-</ul></li>
-<li><strong><code>(const Point&amp; a, const Point&amp; b)</code></strong>：
-<ul>
-<li>参数列表，表示这个 Lambda 接收两个参数：<code>a</code> 和
-<code>b</code>，它们是 <code>Point</code> 类型的常量引用。</li>
-</ul></li>
-<li><strong><code>&#123; return a.x == b.x &amp;&amp; a.y == b.y; &#125;</code></strong>：
-<ul>
-<li>函数体，表示这个 Lambda 的逻辑。</li>
-<li>这里比较了两个 <code>Point</code> 对象的 <code>x</code> 和
-<code>y</code> 成员是否相等。</li>
-</ul></li>
-<li><strong>返回值</strong>：
-<ul>
-<li>返回值是隐式的，编译器根据 <code>return</code> 语句推断返回类型为
-<code>bool</code>。</li>
-</ul></li>
-</ol>
-<hr />
-<h3 id="为什么使用-lambda-表达式">3. <strong>为什么使用 Lambda
-表达式？</strong></h3>
-<p>在这段代码中，Lambda 表达式的作用是为 <code>std::equal</code>
-提供自定义的比较规则。如果你不使用 Lambda
-表达式，就需要显式定义一个函数或函数对象。</p>
-<h4 id="使用-lambda-表达式的好处">使用 Lambda 表达式的好处：</h4>
-<ul>
-<li><strong>简洁性</strong>：可以直接在调用处定义逻辑，无需额外命名。</li>
-<li><strong>局部性</strong>：Lambda
-表达式通常只在一个地方使用，避免污染全局命名空间。</li>
-<li><strong>灵活性</strong>：可以动态定义比较规则，而不依赖于固定的函数。</li>
-</ul>
-<hr />
-<h3 id="对比不使用-lambda-的实现">4. <strong>对比：不使用 Lambda
-的实现</strong></h3>
-<p>如果不使用 Lambda
-表达式，你需要显式定义一个函数或函数对象来实现相同的逻辑：</p>
-<h4 id="方法-1定义一个具名函数">方法 1：定义一个具名函数</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">comparePoints</span><span class="params">(<span class="type">const</span> Point&amp; a, <span class="type">const</span> Point&amp; b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.x == b.x &amp;&amp; a.y == b.y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> areEqual = std::<span class="built_in">equal</span>(vec<span class="number">1.</span><span class="built_in">begin</span>(), vec<span class="number">1.</span><span class="built_in">end</span>(), vec<span class="number">2.</span><span class="built_in">begin</span>(), comparePoints);</span><br></pre></td></tr></table></figure>
-<h4 id="方法-2定义一个函数对象">方法 2：定义一个函数对象</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ComparePoints</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> Point&amp; a, <span class="type">const</span> Point&amp; b)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a.x == b.x &amp;&amp; a.y == b.y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> areEqual = std::<span class="built_in">equal</span>(vec<span class="number">1.</span><span class="built_in">begin</span>(), vec<span class="number">1.</span><span class="built_in">end</span>(), vec<span class="number">2.</span><span class="built_in">begin</span>(), <span class="built_in">ComparePoints</span>());</span><br></pre></td></tr></table></figure>
-<h4 id="对比分析">对比分析：</h4>
-<ul>
-<li>Lambda 表达式更简洁，适合在局部范围内使用。</li>
-<li>具名函数和函数对象更适合在多个地方复用。</li>
-</ul>
-<hr />
-<h3 id="总结">5. <strong>总结</strong></h3>
-<ul>
-<li><strong>Lambda 表达式</strong>
-是一种匿名函数的定义方式，语法简洁且灵活。</li>
-<li>在你的代码中，Lambda 表达式用于为 <code>std::equal</code>
-提供自定义的比较逻辑。</li>
-<li>使用 Lambda
-表达式可以让代码更紧凑、更易读，尤其适用于一次性使用的简单逻辑。</li>
-</ul>
-<p>通过 Lambda
-表达式，你可以轻松实现复杂的比较规则，而无需额外定义具名函数或函数对象。这是
-C++11 及更高版本中非常强大的功能之一！</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/03/29/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">https://hduroy.github.io/2025/03/29/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/28/%E6%95%B0%E6%8D%AE%E5%BA%93/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/" title="事务隔离级别"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">事务隔离级别</div></div><div class="info-2"><div class="info-item-1">事务的 ACID 事务具有四个特征：原子性（ Atomicity ）、一致性（ Consistency ）、隔离性（ Isolation ）和持续性（ Durability ）。这四个特性简称为 ACID 特性。   原子性。事务是数据库的逻辑工作单位，事务中包含的各操作要么都做，要么都不做 一致性。事 务执行的结果必须是使数据库从一个一致性状态变到另一个一致性状态。因此当数据库只包含成功事务提交的结果时，就说数据库处于一致性状态。如果数据库系统 运行中发生故障，有些事务尚未完成就被迫中断，这些未完成事务对数据库所做的修改有一部分已写入物理数据库，这时数据库就处于一种不正确的状态，或者说是 不一致的状态。 隔离性。一个事务的执行不能其它事务干扰。即一个事务内部的操作及使用的数据对其它并发事务是隔离的，并发执行的各个事务之间不能互相干扰。 持续性。也称永久性，指一个事务一旦提交，它对数据库中的数据的改变就应该是永久性的。接下来的其它操作或故障不应该对其执行结果有任何影响。   MySQL 中有四种事务隔离级别（Transaction...</div></div></div></a><a class="pagination-related" href="/2025/03/29/Vector%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" title="Vector常见用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Vector常见用法</div></div><div class="info-2"><div class="info-item-1">std::vector 是 C++ 标准模板库（STL）中最常用的数据结构之一，它是一个动态数组，可以存储任意数量的元素，并且支持随机访问。以下是 std::vector 的常见用法及其示例代码：  1. 声明和初始化 声明空向量： 1std::vector&lt;int&gt; vec;  // 空向量 初始化时指定大小和默认值： 12std::vector&lt;int&gt; vec(5);       // 向量大小为 5，所有元素初始化为 0std::vector&lt;int&gt; vec2(5, 10);  // 向量大小为 5，所有元素初始化为 10 使用初始化列表： 1std::vector&lt;int&gt; vec = &#123;1, 2, 3, 4, 5&#125;;  // 使用列表初始化 复制另一个向量： 12std::vector&lt;int&gt; vec1 = &#123;1, 2, 3&#125;;std::vector&lt;int&gt; vec2(vec1);  // vec2 是 vec1...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/25/KMP%E7%AE%97%E6%B3%95/" title="KMP算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-25</div><div class="info-item-2">KMP算法</div></div><div class="info-2"><div class="info-item-1">KMP算法（Knuth-Morris-Pratt Algorithm）是一种高效的字符串匹配算法，由Donald Knuth、Vaughan Pratt和James H. Morris于1977年共同提出。它的核心思想是通过预处理模式串（Pattern），构建一个部分匹配表（Partial Match Table，也称为前缀函数或失败函数），从而避免在匹配失败时回溯文本串（Text）的指针，从而提高匹配效率。  1. 问题背景 在字符串匹配问题中，给定一个文本串T和一个模式串P，目标是找到模式串P在文本串T中出现的所有位置。传统的暴力匹配算法的时间复杂度为O(n * m)（其中n是文本串长度，m是模式串长度），而KMP算法通过优化使时间复杂度降低到O(n + m)。  2....</div></div></div></a><a class="pagination-related" href="/2025/03/29/Vector%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" title="Vector常见用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">Vector常见用法</div></div><div class="info-2"><div class="info-item-1">std::vector 是 C++ 标准模板库（STL）中最常用的数据结构之一，它是一个动态数组，可以存储任意数量的元素，并且支持随机访问。以下是 std::vector 的常见用法及其示例代码：  1. 声明和初始化 声明空向量： 1std::vector&lt;int&gt; vec;  // 空向量 初始化时指定大小和默认值： 12std::vector&lt;int&gt; vec(5);       // 向量大小为 5，所有元素初始化为 0std::vector&lt;int&gt; vec2(5, 10);  // 向量大小为 5，所有元素初始化为 10 使用初始化列表： 1std::vector&lt;int&gt; vec = &#123;1, 2, 3, 4, 5&#125;;  // 使用列表初始化 复制另一个向量： 12std::vector&lt;int&gt; vec1 = &#123;1, 2, 3&#125;;std::vector&lt;int&gt; vec2(vec1);  // vec2 是 vec1...</div></div></div></a><a class="pagination-related" href="/2025/03/29/max_element%E7%94%A8%E6%B3%95/" title="max_element用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">max_element用法</div></div><div class="info-2"><div class="info-item-1">std::max_element 是 C++ 标准库中的一个算法函数，用于在一个范围内查找最大值的元素。它定义在头文件 &lt;algorithm&gt; 中，返回一个指向范围中最大值的迭代器。以下是 std::max_element 的详细用法和示例。  1. 基本语法 12345template&lt; class ForwardIt &gt;ForwardIt max_element( ForwardIt first, ForwardIt last );template&lt; class ForwardIt, class Compare &gt;ForwardIt max_element( ForwardIt first, ForwardIt last, Compare comp ); 参数：  first 和 last：指定范围 [first, last)，其中 first 是起始迭代器，last 是结束迭代器（不包括该位置）。 comp（可选）：自定义比较函数或...</div></div></div></a><a class="pagination-related" href="/2025/03/30/tuple%E7%94%A8%E6%B3%95/" title="tuple用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-30</div><div class="info-item-2">tuple用法</div></div><div class="info-2"><div class="info-item-1">在 C++ 中，std::tuple 是标准库提供的一个容器，用于存储固定数量的异构元素（即不同类型的值）。它类似于 std::pair，但更通用，因为它可以容纳任意数量的元素。std::tuple 在需要返回多个值或处理多维数据时非常有用。 下面我们将详细解释 std::tuple 的用法，包括它的定义、操作和常见应用场景。  1. 基本定义 std::tuple 是一个模板类，定义在头文件 &lt;tuple&gt; 中。使用时需要包含该头文件： 1#include &lt;tuple&gt; 创建 tuple 可以通过以下方式创建 tuple： - 使用 std::make_tuple 函数。 - 直接使用 std::tuple 构造函数。 示例： 123456789101112#include &lt;tuple&gt;#include &lt;iostream&gt;int main() &#123;    // 方法 1: 使用 std::make_tuple    auto t1 = std::make_tuple(1, 3.14,...</div></div></div></a><a class="pagination-related" href="/2025/03/29/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" title="二分查找"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">二分查找</div></div><div class="info-2"><div class="info-item-1">二分查找是一种高效的查找算法，时间复杂度为 O(log n)。然而，二分查找的实现中，边界条件往往是容易出错的地方。理解二分查找的边界条件对于正确实现算法至关重要。 以下是对二分查找边界条件的详细分析，包括常见问题和解决方法。  1. 基本思想 二分查找的核心思想是： - 在一个有序数组中，通过比较目标值与中间值，逐步缩小搜索范围。 - 如果目标值小于中间值，则在左半部分继续查找；如果大于中间值，则在右半部分继续查找。  2. 常见实现方式 （1）左闭右闭区间 [left, right] 这是最常用的实现方式，搜索范围包括两端点 left 和 right。 1234567891011121314int binarySearch(vector&lt;int&gt;&amp; nums, int target) &#123;    int left = 0, right = nums.size() - 1;  // 搜索范围：[left, right]    while (left &lt;= right) &#123;                ...</div></div></div></a><a class="pagination-related" href="/2025/04/16/Leecode/LCR%20164/" title="LCR 164"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-16</div><div class="info-item-2">LCR 164</div></div><div class="info-2"><div class="info-item-1">这道题从根本上来说其实是一个排序问题，你需要做的知识分析什么情况代表大以及什么情况代表小 123456789101112131415int compare(String s1, String s2) &#123; 	int n1 = s1.length(); 	int n = n1 + s2.length(); 	int p1 = 0, p2 = n1; 	for (int i = 0; i &lt; n; i++) &#123; 	char x = p1 &lt; n1 ? s1.charAt(p1) : s2.charAt(p1-n1); 	char y = p2 &lt; n ? s2.charAt(p2-n1) : s1.charAt(p2%n); 	if (x != y) &#123; 		return (int)(x-y); 		&#125; 	p1 ++; 	p2 ++; 	&#125; 	return 0; &#125; </div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是 Lambda
-表达式？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">基本语法：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E8%A7%A3%E4%BD%A0%E7%9A%84-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 分解你的 Lambda
-表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E9%83%A8%E5%88%86%E5%90%AB%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">各部分含义：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 为什么使用 Lambda
-表达式？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">3.1.</span> <span class="toc-text">使用 Lambda 表达式的好处：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E4%B8%8D%E4%BD%BF%E7%94%A8-lambda-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">4. 对比：不使用 Lambda
-的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%85%B7%E5%90%8D%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">方法 1：定义一个具名函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-2%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="toc-number">4.2.</span> <span class="toc-text">方法 2：定义一个函数对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90"><span class="toc-number">4.3.</span> <span class="toc-text">对比分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">5. 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/23/Leecode/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="图基础知识">图基础知识</a><time datetime="2025-04-22T16:00:00.000Z" title="发表于 2025-04-23 00:00:00">2025-04-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/21/Leecode/Leecode%20322.%20%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/" title="Leecode 322. 零钱兑换">Leecode 322. 零钱兑换</a><time datetime="2025-04-20T16:00:00.000Z" title="发表于 2025-04-21 00:00:00">2025-04-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/21/Leecode/leecode%20518%20%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2%20II/" title="leecode 518 零钱兑换 II">leecode 518 零钱兑换 II</a><time datetime="2025-04-20T16:00:00.000Z" title="发表于 2025-04-21 00:00:00">2025-04-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/21/Leecode/%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85/" title="完全背包">完全背包</a><time datetime="2025-04-20T16:00:00.000Z" title="发表于 2025-04-21 00:00:00">2025-04-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/18/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E5%A6%82%E4%BD%95%E6%8E%8C%E6%8F%A1%E6%8A%80%E5%B7%A7/" title="如何掌握技巧">如何掌握技巧</a><time datetime="2025-04-18T00:00:00.000Z" title="发表于 2025-04-18 08:00:00">2025-04-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

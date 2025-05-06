@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>tuple | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 C++ 中，std::tuple 是一个非常强大的多类型容器，它可以存储多个不同类型的值（类似结构体），但不需要你自定义类型。它非常适合临时存储一组相关数据。  🧱 一、基本概念 ✅ tuple 是什么？  tuple 是 标准库模板类，位于 &lt;tuple&gt; 头文件中。 可以理解为 “元组”，是一个固定大小的有序集合，每个元素可以是不同类型。 支持任意数量的元">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tuple">
+<meta property="og:url" content="https://hduroy.github.io/2025/05/05/C++/tuple/index.html">
+<meta property="og:site_name" content="Roy&#39;s Blog">
+<meta property="og:description" content="在 C++ 中，std::tuple 是一个非常强大的多类型容器，它可以存储多个不同类型的值（类似结构体），但不需要你自定义类型。它非常适合临时存储一组相关数据。  🧱 一、基本概念 ✅ tuple 是什么？  tuple 是 标准库模板类，位于 &lt;tuple&gt; 头文件中。 可以理解为 “元组”，是一个固定大小的有序集合，每个元素可以是不同类型。 支持任意数量的元">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hduroy.github.io/img/logo.png">
+<meta property="article:published_time" content="2025-05-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-05T03:16:48.510Z">
+<meta property="article:author" content="Roy">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hduroy.github.io/img/logo.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tuple",
+  "url": "https://hduroy.github.io/2025/05/05/C++/tuple/",
+  "image": "https://hduroy.github.io/img/logo.png",
+  "datePublished": "2025-05-04T16:00:00.000Z",
+  "dateModified": "2025-05-05T03:16:48.510Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Roy",
+      "url": "https://hduroy.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hduroy.github.io/2025/05/05/C++/tuple/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'tuple',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">tuple</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">tuple</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-04T16:00:00.000Z" title="发表于 2025-05-05 00:00:00">2025-05-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-05T03:16:48.510Z" title="更新于 2025-05-05 11:16:48">2025-05-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在 C++ 中，<code>std::tuple</code>
+是一个非常强大的<strong>多类型容器</strong>，它可以存储多个不同类型的值（类似结构体），但不需要你自定义类型。它非常适合临时存储一组相关数据。</p>
+<hr />
+<h2 id="一基本概念">🧱 一、基本概念</h2>
+<h3 id="tuple-是什么">✅ <code>tuple</code> 是什么？</h3>
+<ul>
+<li><code>tuple</code> 是 <strong>标准库模板类</strong>，位于
+<code>&lt;tuple&gt;</code> 头文件中。</li>
+<li>可以理解为
+<strong>“元组”</strong>，是一个固定大小的有序集合，每个元素可以是不同类型。</li>
+<li>支持任意数量的元素（C++11 起支持最多 100 个字段）。</li>
+</ul>
+<hr />
+<h2 id="二基本用法">📦 二、基本用法</h2>
+<h3 id="引入头文件">1. 引入头文件：</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="定义和初始化-tuple">2. 定义和初始化 tuple</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::tuple&lt;std::string, <span class="type">int</span>, <span class="type">double</span>&gt; <span class="title">t1</span><span class="params">(<span class="string">&quot;Alice&quot;</span>, <span class="number">25</span>, <span class="number">89.5</span>)</span></span>;</span><br><span class="line">std::tuple&lt;<span class="type">int</span>, std::string, <span class="type">bool</span>&gt; t2 = std::<span class="built_in">make_tuple</span>(<span class="number">1</span>, <span class="string">&quot;Active&quot;</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>也可以使用 <code>auto</code> 自动推导类型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> t3 = std::<span class="built_in">make_tuple</span>(<span class="number">3.14</span>, <span class="string">&quot;pi&quot;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="三访问-tuple-元素">🔍 三、访问 tuple 元素</h2>
+<p>使用 <code>std::get&lt;index&gt;(tuple)</code> 来访问元素：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> student = std::<span class="built_in">make_tuple</span>(<span class="string">&quot;Bob&quot;</span>, <span class="number">22</span>, <span class="number">92.5</span>);</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Name: &quot;</span> &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">0</span>&gt;(student) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Age: &quot;</span> &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(student) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Score: &quot;</span> &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(student) &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Name: Bob</span><br><span class="line">Age: 22</span><br><span class="line">Score: 92.5</span><br></pre></td></tr></table></figure></p>
+<hr />
+<h2 id="四修改-tuple-中的值">🔄 四、修改 tuple 中的值</h2>
+<p>可以直接赋值给某个位置的元素：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::tuple&lt;std::string, <span class="type">int</span>, <span class="type">double</span>&gt; t = std::<span class="built_in">make_tuple</span>(<span class="string">&quot;Alice&quot;</span>, <span class="number">25</span>, <span class="number">89.5</span>);</span><br><span class="line"></span><br><span class="line">std::<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(t) = <span class="number">26</span>; <span class="comment">// 修改年龄为 26</span></span><br><span class="line">std::<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(t) += <span class="number">1.5</span>; <span class="comment">// 分数加 1.5</span></span><br><span class="line"></span><br><span class="line">std::cout &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(t) &lt;&lt; <span class="string">&quot;\n&quot;</span>; <span class="comment">// 输出 91</span></span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="五结构化绑定c17-起">🧩 五、结构化绑定（C++17 起）</h2>
+<p>你可以使用 <strong>结构化绑定（Structured Binding）</strong> 直接从
+tuple 解包出变量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> [name, age, score] = student;</span><br><span class="line"></span><br><span class="line">std::cout &lt;&lt; name &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; age &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; score &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>这使得代码更清晰、易读。</p>
+<hr />
+<h2 id="六常见用途">🧠 六、常见用途</h2>
+<table>
+<colgroup>
+<col style="width: 62%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr>
+<th>使用场景</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>返回多个值</td>
+<td>函数返回 <code>tuple&lt;int, string, bool&gt;</code></td>
+</tr>
+<tr>
+<td>存储临时对象</td>
+<td>如 <code>tuple&lt;string, int, int&gt;</code> 表示学生信息</td>
+</tr>
+<tr>
+<td>配合 priority_queue</td>
+<td>存储带优先级的数据：<code>priority_queue&lt;tuple&lt;int, int, string&gt;&gt;</code></td>
+</tr>
+<tr>
+<td>图算法中的状态表示</td>
+<td>BFS/DFS 中保存 <code>(x, y, steps)</code> 状态</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="七完整示例代码">🧪 七、完整示例代码</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function">tuple&lt;string, <span class="type">int</span>, <span class="type">double</span>&gt; <span class="title">getStudentData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">make_tuple</span>(<span class="string">&quot;Charlie&quot;</span>, <span class="number">20</span>, <span class="number">88.0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 创建 tuple</span></span><br><span class="line">    tuple&lt;string, <span class="type">int</span>, <span class="type">double</span>&gt; student = <span class="built_in">getStudentData</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 结构化绑定（C++17）</span></span><br><span class="line">    <span class="keyword">auto</span> [name, age, score] = student;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;姓名: &quot;</span> &lt;&lt; name &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;年龄: &quot;</span> &lt;&lt; age &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;分数: &quot;</span> &lt;&lt; score &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改分数</span></span><br><span class="line">    <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(student) = <span class="number">90.5</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;修改后分数: &quot;</span> &lt;&lt; <span class="built_in">get</span>&lt;<span class="number">2</span>&gt;(student) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="八注意事项">⚠️ 八、注意事项</h2>
+<table>
+<thead>
+<tr>
+<th>事项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变长度</td>
+<td>tuple 的长度在编译时就确定了</td>
+</tr>
+<tr>
+<td>访问效率</td>
+<td><code>get&lt;N&gt;(t)</code> 是常数时间复杂度</td>
+</tr>
+<tr>
+<td>类型安全</td>
+<td>每个元素类型必须在编译时确定</td>
+</tr>
+<tr>
+<td>索引越界</td>
+<td>编译时报错（如果使用常量表达式索引）</td>
+</tr>
+<tr>
+<td>可读性差</td>
+<td>如果字段太多或没有命名，容易混乱（推荐用 struct 替代）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="九与-pair-和-struct-的对比">📌 九、与 <code>pair</code> 和
+<code>struct</code> 的对比</h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>支持字段数</th>
+<th>是否命名字段</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pair&lt;T1, T2&gt;</code></td>
+<td>2 个</td>
+<td>否</td>
+<td>临时配对数据</td>
+</tr>
+<tr>
+<td><code>tuple&lt;T1, T2..., Tn&gt;</code></td>
+<td>N 个</td>
+<td>否</td>
+<td>多个不同类型的数据组合</td>
+</tr>
+<tr>
+<td><code>struct &#123; T1 a; T2 b; ... &#125;</code></td>
+<td>N 个</td>
+<td>是</td>
+<td>数据有明确含义时推荐使用</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="十总结一句话">✅ 十、总结一句话</h2>
+<blockquote>
+<p><code>std::tuple</code>
+是一种轻量级的多类型容器，适合快速打包多个值，但不适合长期维护或字段很多的情况，建议在这种情况下使用
+<code>struct</code>。</p>
+</blockquote>
+<hr />
+<p>如果你正在做 LeetCode 或算法题，想了解如何用 <code>tuple</code> 实现
+BFS、A*、Dijkstra 等算法，我也可以为你提供完整模板 😎<br />
+欢迎继续提问！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/05/05/C++/tuple/">https://hduroy.github.io/2025/05/05/C++/tuple/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/04/29/Leecode/%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/" title="单词接龙"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">单词接龙</div></div><div class="info-2"><div class="info-item-1">我写的垃圾code，时间复杂度超标了，需要优化数据结构 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161class Solution &#123;private:    vector&lt;vector&lt;int&gt;&gt; ans;    vector&lt;int&gt;...</div></div></div></a><a class="pagination-related" href="/2025/05/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/" title="判断是否有环"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">判断是否有环</div></div><div class="info-2"><div class="info-item-1">在 C++ 中判断一个图（Graph）中是否存在环，通常使用深度优先搜索（DFS）或者拓扑排序（适用于有向图）的方法。下面我会分别介绍如何判断 有向图 和 无向图 中是否有环。  一、判断无向图中是否有环 方法：DFS 或 并查集（Union-Find） ✅ 使用 DFS 的思路：  对每个未访问的节点进行 DFS。 在 DFS 中，如果发现某个邻接节点已经被访问过，并且它不是当前节点的父节点，则存在环。  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;class Graph &#123;    int V;  // 顶点数    vector&lt;vector&lt;int&gt;&gt; adj;  // 邻接表    bool...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/29/C++/Lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="Lamda表达式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">Lamda表达式</div></div><div class="info-2"><div class="info-item-1">是的，这段代码中的 [](const Point&amp; a, const Point&amp; b) &#123; return a.x == b.x &amp;&amp; a.y == b.y; &#125; 是一个 Lambda 表达式（也叫 Lambda 函数）。它是 C++11 引入的一种简洁定义匿名函数的方式。  1. 什么是 Lambda 表达式？ Lambda 表达式是一种在代码中直接定义匿名函数的语法。它允许你快速创建一个简单的函数对象，而无需显式地定义一个具名函数。 基本语法： 1[capture](parameters) -&gt; return_type &#123; body &#125;  capture：捕获列表，用于捕获外部变量。可以为空。 parameters：参数列表，与普通函数的参数列表类似。 return_type：返回类型（可选）。如果编译器能推断出返回类型，则可以省略。 body：函数体，包含实际执行的代码。   2. 分解你的 Lambda 表达式 以下是你的代码中的 Lambda...</div></div></div></a><a class="pagination-related" href="/2025/03/29/C++/Vector%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" title="Vector常见用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">Vector常见用法</div></div><div class="info-2"><div class="info-item-1">std::vector 是 C++ 标准模板库（STL）中最常用的数据结构之一，它是一个动态数组，可以存储任意数量的元素，并且支持随机访问。以下是 std::vector 的常见用法及其示例代码：  1. 声明和初始化 声明空向量： 1std::vector&lt;int&gt; vec;  // 空向量 初始化时指定大小和默认值： 12std::vector&lt;int&gt; vec(5);       // 向量大小为 5，所有元素初始化为 0std::vector&lt;int&gt; vec2(5, 10);  // 向量大小为 5，所有元素初始化为 10 使用初始化列表： 1std::vector&lt;int&gt; vec = &#123;1, 2, 3, 4, 5&#125;;  // 使用列表初始化 复制另一个向量： 12std::vector&lt;int&gt; vec1 = &#123;1, 2, 3&#125;;std::vector&lt;int&gt; vec2(vec1);  // vec2 是 vec1...</div></div></div></a><a class="pagination-related" href="/2025/03/29/C++/max_element%E7%94%A8%E6%B3%95/" title="max_element用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="info-item-2">max_element用法</div></div><div class="info-2"><div class="info-item-1">std::max_element 是 C++ 标准库中的一个算法函数，用于在一个范围内查找最大值的元素。它定义在头文件 &lt;algorithm&gt; 中，返回一个指向范围中最大值的迭代器。以下是 std::max_element 的详细用法和示例。  1. 基本语法 12345template&lt; class ForwardIt &gt;ForwardIt max_element( ForwardIt first, ForwardIt last );template&lt; class ForwardIt, class Compare &gt;ForwardIt max_element( ForwardIt first, ForwardIt last, Compare comp ); 参数：  first 和 last：指定范围 [first, last)，其中 first 是起始迭代器，last 是结束迭代器（不包括该位置）。 comp（可选）：自定义比较函数或...</div></div></div></a><a class="pagination-related" href="/2025/03/30/C++/tuple%E7%94%A8%E6%B3%95/" title="tuple用法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-30</div><div class="info-item-2">tuple用法</div></div><div class="info-2"><div class="info-item-1">在 C++ 中，std::tuple 是标准库提供的一个容器，用于存储固定数量的异构元素（即不同类型的值）。它类似于 std::pair，但更通用，因为它可以容纳任意数量的元素。std::tuple 在需要返回多个值或处理多维数据时非常有用。 下面我们将详细解释 std::tuple 的用法，包括它的定义、操作和常见应用场景。  1. 基本定义 std::tuple 是一个模板类，定义在头文件 &lt;tuple&gt; 中。使用时需要包含该头文件： 1#include &lt;tuple&gt; 创建 tuple 可以通过以下方式创建 tuple： - 使用 std::make_tuple 函数。 - 直接使用 std::tuple 构造函数。 示例： 123456789101112#include &lt;tuple&gt;#include &lt;iostream&gt;int main() &#123;    // 方法 1: 使用 std::make_tuple    auto t1 = std::make_tuple(1, 3.14,...</div></div></div></a><a class="pagination-related" href="/2025/04/16/Leecode/LCR%20164/" title="LCR 164"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-16</div><div class="info-item-2">LCR 164</div></div><div class="info-2"><div class="info-item-1">这道题从根本上来说其实是一个排序问题，你需要做的知识分析什么情况代表大以及什么情况代表小 123456789101112131415int compare(String s1, String s2) &#123; 	int n1 = s1.length(); 	int n = n1 + s2.length(); 	int p1 = 0, p2 = n1; 	for (int i = 0; i &lt; n; i++) &#123; 	char x = p1 &lt; n1 ? s1.charAt(p1) : s2.charAt(p1-n1); 	char y = p2 &lt; n ? s2.charAt(p2-n1) : s1.charAt(p2%n); 	if (x != y) &#123; 		return (int)(x-y); 		&#125; 	p1 ++; 	p2 ++; 	&#125; 	return 0; &#125; </div></div></div></a><a class="pagination-related" href="/2025/04/21/Leecode/Leecode%20322.%20%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/" title="Leecode 322. 零钱兑换"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-21</div><div class="info-item-2">Leecode 322. 零钱兑换</div></div><div class="info-2"><div class="info-item-1">1234567891011121314151617181920212223242526//这道题没有强调顺序class Solution &#123;public:    int coinChange(vector&lt;int&gt;&amp; coins, int amount) &#123;        vector&lt;unsigned long long&gt; dp(amount + 1, numeric_limits&lt;int&gt;::max());        dp[0] = 0;        for(int &amp;coin : coins)&#123;            for(int i = coin; i &lt; amount + 1; i++)&#123;                dp[i] = min(dp[i], dp[i - coin] + 1);            &#125;        &#125;        return dp[amount] ==...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">🧱 一、基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">✅ tuple 是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">📦 二、基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 引入头文件：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96-tuple"><span class="toc-number">2.2.</span> <span class="toc-text">2. 定义和初始化 tuple</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E8%AE%BF%E9%97%AE-tuple-%E5%85%83%E7%B4%A0"><span class="toc-number">3.</span> <span class="toc-text">🔍 三、访问 tuple 元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E4%BF%AE%E6%94%B9-tuple-%E4%B8%AD%E7%9A%84%E5%80%BC"><span class="toc-number">4.</span> <span class="toc-text">🔄 四、修改 tuple 中的值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9Ac17-%E8%B5%B7"><span class="toc-number">5.</span> <span class="toc-text">🧩 五、结构化绑定（C++17 起）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E5%B8%B8%E8%A7%81%E7%94%A8%E9%80%94"><span class="toc-number">6.</span> <span class="toc-text">🧠 六、常见用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">7.</span> <span class="toc-text">🧪 七、完整示例代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">8.</span> <span class="toc-text">⚠️ 八、注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E4%B8%8E-pair-%E5%92%8C-struct-%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">9.</span> <span class="toc-text">📌 九、与 pair 和
+struct 的对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E6%80%BB%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-number">10.</span> <span class="toc-text">✅ 十、总结一句话</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/" title="判断是否有环">判断是否有环</a><time datetime="2025-05-05T16:00:00.000Z" title="发表于 2025-05-06 00:00:00">2025-05-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/06/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%98%85%E8%AF%BB/%E5%9B%BE%E8%AE%BA%E6%96%B9%E6%B3%95/%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="第一章">第一章</a><time datetime="2025-05-05T16:00:00.000Z" title="发表于 2025-05-06 00:00:00">2025-05-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/05/C++/tuple/" title="tuple">tuple</a><time datetime="2025-05-04T16:00:00.000Z" title="发表于 2025-05-05 00:00:00">2025-05-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/29/Leecode/%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/" title="单词接龙">单词接龙</a><time datetime="2025-04-28T16:00:00.000Z" title="发表于 2025-04-29 00:00:00">2025-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%86%85%E5%AD%98%E6%B1%A0/" title="内存池">内存池</a><time datetime="2025-04-26T16:00:00.000Z" title="发表于 2025-04-27 00:00:00">2025-04-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

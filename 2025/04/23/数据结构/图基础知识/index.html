@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>图基础知识 | Roy's Blog</title><meta name="author" content="Roy"><meta name="copyright" content="Roy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="(图论是数学和计算机科学中的一个重要分支，专注于研究图（Graph）的性质及其应用。图是一种抽象的数据结构，用于表示对象之间的关系。以下是图论的基础知识，包括定义、术语、存储方式以及基本算法。  一、图的基本定义  图的定义 图是由顶点（Vertex&#x2F;Node）和边（Edge）组成的集合，记作 $ G &#x3D; (V, E) $，其中：  \(V\) 是顶点的集合。 \(E\) 是边">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图基础知识">
+<meta property="og:url" content="https://hduroy.github.io/2025/04/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Roy&#39;s Blog">
+<meta property="og:description" content="(图论是数学和计算机科学中的一个重要分支，专注于研究图（Graph）的性质及其应用。图是一种抽象的数据结构，用于表示对象之间的关系。以下是图论的基础知识，包括定义、术语、存储方式以及基本算法。  一、图的基本定义  图的定义 图是由顶点（Vertex&#x2F;Node）和边（Edge）组成的集合，记作 $ G &#x3D; (V, E) $，其中：  \(V\) 是顶点的集合。 \(E\) 是边">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hduroy.github.io/img/logo.png">
+<meta property="article:published_time" content="2025-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-29T12:12:50.913Z">
+<meta property="article:author" content="Roy">
+<meta property="article:tag" content="图">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hduroy.github.io/img/logo.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "图基础知识",
+  "url": "https://hduroy.github.io/2025/04/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/",
+  "image": "https://hduroy.github.io/img/logo.png",
+  "datePublished": "2025-04-22T16:00:00.000Z",
+  "dateModified": "2025-04-29T12:12:50.913Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Roy",
+      "url": "https://hduroy.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hduroy.github.io/2025/04/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '图基础知识',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Roy's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">图基础知识</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fa fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/picture/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">图基础知识</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-22T16:00:00.000Z" title="发表于 2025-04-23 00:00:00">2025-04-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-29T12:12:50.913Z" title="更新于 2025-04-29 20:12:50">2025-04-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>(图论是数学和计算机科学中的一个重要分支，专注于研究图（Graph）的性质及其应用。图是一种抽象的数据结构，用于表示对象之间的关系。以下是图论的基础知识，包括定义、术语、存储方式以及基本算法。</p>
+<hr />
+<h3 id="一图的基本定义">一、图的基本定义</h3>
+<ol type="1">
+<li><strong>图的定义</strong><br />
+图是由<strong>顶点（Vertex/Node）</strong>和<strong>边（Edge）</strong>组成的集合，记作
+$ G = (V, E) $，其中：
+<ul>
+<li><span class="math inline">\(V\)</span> 是顶点的集合。</li>
+<li><span class="math inline">\(E\)</span>
+是边的集合，每条边连接两个顶点。</li>
+</ul></li>
+<li><strong>有向图与无向图</strong>
+<ul>
+<li><strong>无向图</strong>：边没有方向，<span class="math inline">\((u,
+v) \equiv (v, u)\)</span>。</li>
+<li><strong>有向图</strong>：边有方向，<span class="math inline">\((u,
+v) \neq (v, u)\)</span>。</li>
+</ul></li>
+<li><strong>加权图</strong>
+<ul>
+<li>每条边附加一个权重值，用来表示距离、成本等。</li>
+</ul></li>
+<li><strong>简单图与多重图</strong>
+<ul>
+<li><strong>简单图</strong>：任意两点间最多有一条边，且没有自环（从一个顶点指向自身的边）。</li>
+<li><strong>多重图</strong>：允许两点间有多条边或存在自环。</li>
+</ul></li>
+<li><strong>完全图</strong>
+<ul>
+<li>每对不同的顶点之间都有一条边相连。</li>
+</ul></li>
+<li><strong>稀疏图与稠密图</strong>
+<ul>
+<li><strong>稀疏图</strong>：边数远小于顶点数的平方。</li>
+<li><strong>稠密图</strong>：边数接近顶点数的平方。</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="二图的基本术语">二、图的基本术语</h3>
+<ol type="1">
+<li><strong>度（Degree）</strong>
+<ul>
+<li><strong>无向图</strong>中，顶点的度是与其相连的边的数量。</li>
+<li><strong>有向图</strong>中，分为入度（指向该顶点的边数）和出度（从该顶点出发的边数）。</li>
+</ul></li>
+<li><strong>路径（Path）</strong>
+<ul>
+<li>由一系列顶点组成，相邻顶点之间有边相连。</li>
+</ul></li>
+<li><strong>环（Cycle）</strong>
+<ul>
+<li>起点和终点相同的路径称为环。</li>
+</ul></li>
+<li><strong>连通性</strong>
+<ul>
+<li><strong>无向图</strong>：如果任意两点之间都有路径，则称图是连通的。</li>
+<li><strong>有向图</strong>：如果忽略边的方向后是连通的，则称图是弱连通的；如果考虑方向后仍是连通的，则称图是强连通的。</li>
+</ul></li>
+<li><strong>子图（Subgraph）</strong>
+<ul>
+<li>图 <span class="math inline">\(G&#39;\)</span> 是图 <span
+class="math inline">\(G\)</span> 的子图，如果 <span
+class="math inline">\(G&#39;\)</span> 的顶点和边都是 <span
+class="math inline">\(G\)</span> 的子集。</li>
+</ul></li>
+<li><strong>生成树（Spanning Tree）</strong>
+<ul>
+<li>包含图中所有顶点的最小连通子图，且不含环。</li>
+</ul></li>
+<li><strong>割点与桥</strong>
+<ul>
+<li><strong>割点</strong>：删除某个顶点会导致图不连通。</li>
+<li><strong>桥</strong>：删除某条边会导致图不连通。</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="三图的存储方式">三、图的存储方式</h3>
+<ol type="1">
+<li><strong>邻接矩阵（Adjacency Matrix）</strong>
+<ul>
+<li>使用一个二维数组 <span class="math inline">\(A\)</span> 表示图，其中
+<span class="math inline">\(A[i][j]\)</span> 表示顶点 <span
+class="math inline">\(i\)</span> 和 <span
+class="math inline">\(j\)</span> 是否有边相连。</li>
+<li><strong>优点</strong>：查询边的存在性快（O(1) 时间复杂度）。</li>
+<li><strong>缺点</strong>：空间复杂度高（<span
+class="math inline">\(O(V^2)\)</span>），不适合稀疏图。</li>
+</ul></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GraphMatrix</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> numVertices;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; adjMatrix;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">GraphMatrix</span>(<span class="type">int</span> vertices) &#123;</span><br><span class="line">        numVertices = vertices;</span><br><span class="line">        adjMatrix.<span class="built_in">resize</span>(vertices, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(vertices, <span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addEdge</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        adjMatrix[u][v] = <span class="number">1</span>;</span><br><span class="line">        adjMatrix[v][u] = <span class="number">1</span>; <span class="comment">// 如果是有向图就去掉这一行</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">printMatrix</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; numVertices; ++i) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; numVertices; ++j) &#123;</span><br><span class="line">                cout &lt;&lt; adjMatrix[i][j] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cout &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> v, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span> </span>&#123;</span><br><span class="line">        visited[v] = <span class="literal">true</span>;</span><br><span class="line">        cout &lt;&lt; v &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; numVertices; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (adjMatrix[v][i] &amp;&amp; !visited[i]) &#123;</span><br><span class="line">                <span class="built_in">dfs</span>(i, visited);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfsTraversal</span><span class="params">(<span class="type">int</span> start)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(numVertices, <span class="literal">false</span>)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;DFS from vertex &quot;</span> &lt;&lt; start &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(start, visited);</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li><strong>邻接表（Adjacency List）</strong>
+<ul>
+<li>使用链表或数组存储每个顶点的邻居。</li>
+<li><strong>优点</strong>：节省空间（特别是稀疏图），添加和删除边效率高。</li>
+<li><strong>缺点</strong>：查询边的存在性较慢（需要遍历邻居列表）。
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GraphList</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> numVertices;</span><br><span class="line">    vector&lt;list&lt;<span class="type">int</span>&gt;&gt; adjList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">GraphList</span>(<span class="type">int</span> vertices) &#123;</span><br><span class="line">        numVertices = vertices;</span><br><span class="line">        adjList.<span class="built_in">resize</span>(vertices);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addEdge</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        adjList[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        adjList[v].<span class="built_in">push_back</span>(u); <span class="comment">// 如果是有向图就去掉这一行</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">printList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; numVertices; ++i) &#123;</span><br><span class="line">            cout &lt;&lt; i &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> neighbor : adjList[i]) &#123;</span><br><span class="line">                cout &lt;&lt; neighbor &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cout &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> v, vector&lt;<span class="type">bool</span>&gt;&amp; visited)</span> </span>&#123;</span><br><span class="line">        visited[v] = <span class="literal">true</span>;</span><br><span class="line">        cout &lt;&lt; v &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> neighbor : adjList[v]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visited[neighbor]) &#123;</span><br><span class="line">                <span class="built_in">dfs</span>(neighbor, visited);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dfsTraversal</span><span class="params">(<span class="type">int</span> start)</span> </span>&#123;</span><br><span class="line">        <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(numVertices, <span class="literal">false</span>)</span></span>;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;DFS from vertex &quot;</span> &lt;&lt; start &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">        <span class="built_in">dfs</span>(start, visited);</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><strong>边列表（Edge List）</strong>
+<ul>
+<li>直接存储所有边的列表，每条边用两个顶点表示。</li>
+<li><strong>优点</strong>：实现简单，适合某些特定算法（如 Kruskal
+算法）。</li>
+<li><strong>缺点</strong>：查找邻居效率低。</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="四图的遍历算法">四、图的遍历算法</h3>
+<ol type="1">
+<li><strong>深度优先搜索（DFS, Depth-First Search）</strong>
+<ul>
+<li>思想：从起始顶点开始，沿着一条路径尽可能深地访问，直到无法继续为止，然后==回溯==。</li>
+<li>实现：递归或栈。</li>
+<li>应用：拓扑排序、寻找连通分量、检测环等。</li>
+</ul></li>
+</ol>
+<p>一个方向一直搜索</p>
+<ol start="2" type="1">
+<li><strong>广度优先搜索（BFS, Breadth-First Search）</strong>
+<ul>
+<li>思想：从起始顶点开始，逐层向外扩展，先访问距离为 1
+的顶点，再访问距离为 2 的顶点，依此类推。</li>
+<li>实现：队列。</li>
+<li>应用：最短路径（无权图）、层次遍历等。</li>
+</ul>
+<h2
+id="我这边都还没有考虑有环的情况所以其实不需要使用visited数组每条路径其实也可以遍历一次不会有问题">我这边都还没有考虑有环的情况，所以其实不需要使用visited数组，每条路径其实也可以遍历一次，不会有问题</h2></li>
+</ol>
+<h3 id="dfs递归版">✅ DFS（递归版）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfsRecursive</span><span class="params">(<span class="type">int</span> v, vector&lt;<span class="type">bool</span>&gt;&amp; visited, <span class="type">const</span> vector&lt;list&lt;<span class="type">int</span>&gt;&gt;&amp; adjList)</span> </span>&#123;</span><br><span class="line">    visited[v] = <span class="literal">true</span>;</span><br><span class="line">    cout &lt;&lt; v &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> neighbor : adjList[v]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!visited[neighbor]) &#123;</span><br><span class="line">            <span class="built_in">dfsRecursive</span>(neighbor, visited, adjList);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="dfs非递归版用栈">✅ DFS（非递归版，用栈）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfsIterative</span><span class="params">(<span class="type">int</span> start, <span class="type">const</span> vector&lt;list&lt;<span class="type">int</span>&gt;&gt;&amp; adjList)</span> </span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(adjList.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">    s.<span class="built_in">push</span>(start);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!s.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> v = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!visited[v]) &#123;</span><br><span class="line">            visited[v] = <span class="literal">true</span>;</span><br><span class="line">            cout &lt;&lt; v &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 为了和递归顺序一致，逆序入栈</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> it = adjList[v].<span class="built_in">rbegin</span>(); it != adjList[v].<span class="built_in">rend</span>(); ++it) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!visited[*it]) &#123;</span><br><span class="line">                    s.<span class="built_in">push</span>(*it);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="bfs非递归用队列">✅ BFS（非递归，用队列）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(<span class="type">int</span> start, <span class="type">const</span> vector&lt;list&lt;<span class="type">int</span>&gt;&gt;&amp; adjList)</span> </span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(adjList.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    visited[start] = <span class="literal">true</span>;</span><br><span class="line">    q.<span class="built_in">push</span>(start);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (!q.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">        <span class="type">int</span> v = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        cout &lt;&lt; v &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> neighbor : adjList[v]) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!visited[neighbor]) &#123;</span><br><span class="line">                visited[neighbor] = <span class="literal">true</span>;</span><br><span class="line">                q.<span class="built_in">push</span>(neighbor);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="示例用法加在-main-里">✅ 示例用法（加在 <code>main</code>
+里）</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = <span class="number">6</span>;</span><br><span class="line">    vector&lt;list&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">adjList</span>(n);</span><br><span class="line">    <span class="keyword">auto</span> addEdge = [&amp;](<span class="type">int</span> u, <span class="type">int</span> v) &#123;</span><br><span class="line">        adjList[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        adjList[v].<span class="built_in">push_back</span>(u); <span class="comment">// 无向图</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">addEdge</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">addEdge</span>(<span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="built_in">addEdge</span>(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">addEdge</span>(<span class="number">1</span>, <span class="number">4</span>);</span><br><span class="line">    <span class="built_in">addEdge</span>(<span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;DFS 递归: &quot;</span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">visited</span><span class="params">(n, <span class="literal">false</span>)</span></span>;</span><br><span class="line">    <span class="built_in">dfsRecursive</span>(<span class="number">0</span>, visited, adjList);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;DFS 非递归: &quot;</span>;</span><br><span class="line">    <span class="built_in">dfsIterative</span>(<span class="number">0</span>, adjList);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;BFS: &quot;</span>;</span><br><span class="line">    <span class="built_in">bfs</span>(<span class="number">0</span>, adjList);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="五图的经典算法">五、图的经典算法</h3>
+<ol type="1">
+<li><strong>最短路径算法</strong>
+<ul>
+<li><strong>Dijkstra
+算法</strong>：解决单源最短路径问题（适用于非负权图）。</li>
+<li><strong>Bellman-Ford
+算法</strong>：解决单源最短路径问题（允许负权边，但不能有负权环）。</li>
+<li><strong>Floyd-Warshall 算法</strong>：解决多源最短路径问题。</li>
+</ul></li>
+<li><strong>最小生成树（MST, Minimum Spanning Tree）</strong>
+<ul>
+<li><strong>Kruskal
+算法</strong>：基于贪心策略，按照边的权重从小到大依次加入，避免形成环。</li>
+<li><strong>Prim
+算法</strong>：从一个顶点开始，逐步扩展生成树，每次选择最小权重的边。</li>
+</ul></li>
+<li><strong>拓扑排序（Topological Sort）</strong>
+<ul>
+<li>用于有向无环图（DAG），将顶点按顺序排列，使得所有边的方向一致。</li>
+</ul></li>
+<li><strong>强连通分量（SCC, Strongly Connected Components）</strong>
+<ul>
+<li><strong>Kosaraju 算法</strong>：通过两次 DFS 找到强连通分量。</li>
+<li><strong>Tarjan
+算法</strong>：使用栈和时间戳一次性找到强连通分量。</li>
+</ul></li>
+<li><strong>网络流问题</strong>
+<ul>
+<li><strong>Ford-Fulkerson 算法</strong>：计算最大流。</li>
+<li><strong>Edmonds-Karp 算法</strong>：基于 BFS 的 Ford-Fulkerson
+实现。</li>
+</ul></li>
+</ol>
+<hr />
+<h3 id="六图的应用场景">六、图的应用场景</h3>
+<ol type="1">
+<li><strong>社交网络分析</strong>
+<ul>
+<li>用图表示用户之间的关系，分析好友推荐、影响力传播等。</li>
+</ul></li>
+<li><strong>交通网络</strong>
+<ul>
+<li>用图表示城市之间的道路或航班，求解最短路径、流量分配等问题。</li>
+</ul></li>
+<li><strong>电路设计</strong>
+<ul>
+<li>用图表示电路元件的连接关系，优化布局和布线。</li>
+</ul></li>
+<li><strong>搜索引擎</strong>
+<ul>
+<li>用图表示网页之间的链接关系，计算 PageRank 等指标。</li>
+</ul></li>
+<li><strong>生物信息学</strong>
+<ul>
+<li>用图表示基因或蛋白质之间的相互作用网络。</li>
+</ul></li>
+</ol>
+<hr />
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://hduroy.github.io">Roy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hduroy.github.io/2025/04/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">https://hduroy.github.io/2025/04/23/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://hduroy.github.io" target="_blank">Roy's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE/">图</a></div><div class="post-share"><div class="social-share" data-image="/img/logo.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/04/23/Leecode/%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84/" title="所有路径"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">所有路径</div></div><div class="info-2"><div class="info-item-1">123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123//鄙人写的屎山代码 本题是邮箱无环图，不需要考率是否重复遍历同一个结点，我这里visited没删//本题我使用了多种数据结构 也尝试建立了邻接矩阵和邻接表 但是时间复杂度和空间复杂度都是严重超标的，需要需要优化//优化点1，其实不需要建立图结构，其实给的就是邻接表的形式，但我是科班初学者，练手来的，所以两种就都写了//路径可以使用栈数据结构来动态维护，我的做法会保存所有的中间结构，导致空间复杂度非常高class Solution &#123;public:   ...</div></div></div></a><a class="pagination-related" href="/2025/04/24/Leecode/%E5%B2%9B%E5%B1%BF%E7%B1%BB%E9%97%AE%E9%A2%98/" title="岛屿类问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">岛屿类问题</div></div><div class="info-2"><div class="info-item-1">120 岛的数量 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188//自己写的版本class Solution...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/04/24/Leecode/%E5%B2%9B%E5%B1%BF%E7%B1%BB%E9%97%AE%E9%A2%98/" title="岛屿类问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-24</div><div class="info-item-2">岛屿类问题</div></div><div class="info-2"><div class="info-item-1">120 岛的数量 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188//自己写的版本class Solution...</div></div></div></a><a class="pagination-related" href="/2025/04/23/Leecode/%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84/" title="所有路径"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-23</div><div class="info-item-2">所有路径</div></div><div class="info-2"><div class="info-item-1">123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123//鄙人写的屎山代码 本题是邮箱无环图，不需要考率是否重复遍历同一个结点，我这里visited没删//本题我使用了多种数据结构 也尝试建立了邻接矩阵和邻接表 但是时间复杂度和空间复杂度都是严重超标的，需要需要优化//优化点1，其实不需要建立图结构，其实给的就是邻接表的形式，但我是科班初学者，练手来的，所以两种就都写了//路径可以使用栈数据结构来动态维护，我的做法会保存所有的中间结构，导致空间复杂度非常高class Solution &#123;public:   ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/logo.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Roy</div><div class="author-info-description">This is a personal blog where I share my thoughts and experiences.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">59</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/hduroy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">一、图的基本定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9C%AF%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">二、图的基本术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">三、图的存储方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">四、图的遍历算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E8%BF%99%E8%BE%B9%E9%83%BD%E8%BF%98%E6%B2%A1%E6%9C%89%E8%80%83%E8%99%91%E6%9C%89%E7%8E%AF%E7%9A%84%E6%83%85%E5%86%B5%E6%89%80%E4%BB%A5%E5%85%B6%E5%AE%9E%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8visited%E6%95%B0%E7%BB%84%E6%AF%8F%E6%9D%A1%E8%B7%AF%E5%BE%84%E5%85%B6%E5%AE%9E%E4%B9%9F%E5%8F%AF%E4%BB%A5%E9%81%8D%E5%8E%86%E4%B8%80%E6%AC%A1%E4%B8%8D%E4%BC%9A%E6%9C%89%E9%97%AE%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">我这边都还没有考虑有环的情况，所以其实不需要使用visited数组，每条路径其实也可以遍历一次，不会有问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dfs%E9%80%92%E5%BD%92%E7%89%88"><span class="toc-number">1.</span> <span class="toc-text">✅ DFS（递归版）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dfs%E9%9D%9E%E9%80%92%E5%BD%92%E7%89%88%E7%94%A8%E6%A0%88"><span class="toc-number">2.</span> <span class="toc-text">✅ DFS（非递归版，用栈）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bfs%E9%9D%9E%E9%80%92%E5%BD%92%E7%94%A8%E9%98%9F%E5%88%97"><span class="toc-number">3.</span> <span class="toc-text">✅ BFS（非递归，用队列）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E7%94%A8%E6%B3%95%E5%8A%A0%E5%9C%A8-main-%E9%87%8C"><span class="toc-number">4.</span> <span class="toc-text">✅ 示例用法（加在 main
+里）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E5%9B%BE%E7%9A%84%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">五、图的经典算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E5%9B%BE%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.</span> <span class="toc-text">六、图的应用场景</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF/" title="判断是否有环">判断是否有环</a><time datetime="2025-05-05T16:00:00.000Z" title="发表于 2025-05-06 00:00:00">2025-05-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/06/%E7%A0%94%E7%A9%B6%E7%94%9F%E9%98%85%E8%AF%BB/%E5%9B%BE%E8%AE%BA%E6%96%B9%E6%B3%95/%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="第一章">第一章</a><time datetime="2025-05-05T16:00:00.000Z" title="发表于 2025-05-06 00:00:00">2025-05-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/05/C++/tuple/" title="tuple">tuple</a><time datetime="2025-05-04T16:00:00.000Z" title="发表于 2025-05-05 00:00:00">2025-05-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/29/Leecode/%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/" title="单词接龙">单词接龙</a><time datetime="2025-04-28T16:00:00.000Z" title="发表于 2025-04-29 00:00:00">2025-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/04/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%86%85%E5%AD%98%E6%B1%A0/" title="内存池">内存池</a><time datetime="2025-04-26T16:00:00.000Z" title="发表于 2025-04-27 00:00:00">2025-04-27</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By Roy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
